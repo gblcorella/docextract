@@ -255,6 +255,17 @@ export default function ExtractionConfigPage() {
                         <p className="text-xs mt-1">Click "Add Field" to get started</p>
                       </div>
                     )}
+                    {fields.length > 0 && (
+                      <div className="mt-4 pt-3 border-t border-slate-100">
+                        <button
+                          onClick={addField}
+                          className="flex items-center gap-1.5 text-sm text-slate-500 hover:text-indigo-600"
+                        >
+                          <Plus className="w-4 h-4" />
+                          Add New Field
+                        </button>
+                      </div>
+                    )}
                   </motion.div>
                 ) : (
                   <motion.div
