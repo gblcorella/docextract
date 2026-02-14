@@ -10,18 +10,10 @@ import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function ConfigSidebar({ config, onConfigChange, isCollapsed, onToggleCollapse }) {
+  if (isCollapsed) return null;
+  
   return (
-    <div className="relative flex-shrink-0">
-      <AnimatePresence mode="wait">
-        {!isCollapsed ? (
-          <motion.div
-            key="expanded"
-            initial={{ width: 0, opacity: 0 }}
-            animate={{ width: 320, opacity: 1 }}
-            exit={{ width: 0, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="space-y-3 overflow-hidden"
-          >
+    <>
       <Card className="bg-white shadow-sm border-slate-200">
         <CardHeader className="py-2.5 px-3">
           <CardTitle className="text-xs font-semibold text-slate-700 flex items-center gap-2">
@@ -201,32 +193,7 @@ export default function ConfigSidebar({ config, onConfigChange, isCollapsed, onT
             </div>
           )}
         </CardContent>
-      </Card>
-          </motion.div>
-        ) : (
-          <motion.div
-            key="collapsed"
-            initial={{ width: 0, opacity: 0 }}
-            animate={{ width: 48, opacity: 1 }}
-            exit={{ width: 0, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="h-full"
-          />
-        )}
-      </AnimatePresence>
-      
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={onToggleCollapse}
-        className="absolute top-2 -right-3 h-6 w-6 rounded-full bg-white border border-slate-200 shadow-sm hover:bg-slate-50 z-10"
-      >
-        {isCollapsed ? (
-          <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
-        ) : (
-          <ChevronLeft className="w-3.5 h-3.5 text-slate-600" />
-        )}
-      </Button>
-    </div>
-  );
-}
+        </Card>
+        </>
+        );
+        }

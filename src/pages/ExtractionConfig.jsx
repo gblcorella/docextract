@@ -13,7 +13,8 @@ import {
   X,
   Sparkles,
   FileUp,
-  Play
+  Play,
+  FileText
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import ConfigSidebar from "@/components/extraction/ConfigSidebar";
@@ -67,6 +68,7 @@ export default function ExtractionConfigPage() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isGeneratingSchema, setIsGeneratingSchema] = useState(false);
   const [isTestingSchema, setIsTestingSchema] = useState(false);
+  const [testDocument, setTestDocument] = useState(null);
 
   const totalFields = fields.reduce((acc, field) => {
     let count = 1;
@@ -173,20 +175,69 @@ export default function ExtractionConfigPage() {
       </header>
 
       {/* Main Content */}
-      <div className="flex p-4 gap-4">
-        <ConfigSidebar 
-          config={config} 
-          onConfigChange={setConfig}
-          isCollapsed={isSidebarCollapsed}
-          onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+      <div className="p-4 space-y-3">
+        {/* Configuration Cards - Horizontal Layout */}
+        <div className="grid grid-cols-3 gap-3">
+          <ConfigSidebar 
+            config={config} 
+            onConfigChange={setConfig}
+            isCollapsed={false}
+            onToggleCollapse={() => {}}
+          />
+        </div>
+
+        <TaskDescription 
+          description={description} 
+          onDescriptionChange={setDescription} 
         />
 
-        {/* Fields Configuration */}
-        <div className="flex-1 space-y-3">
-          <TaskDescription 
-            description={description} 
-            onDescriptionChange={setDescription} 
-          />
+        <div className="flex gap-4">
+          {/* Document Preview */}
+          <div className="w-[400px] flex-shrink-0">
+            <div className="bg-white rounded-lg border border-slate-200 shadow-sm sticky top-20">
+              <div className="p-3 border-b border-slate-100">
+                <h3 className="text-sm font-semibold text-slate-700 flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-indigo-500" />
+                  Document Preview
+                </h3>
+              </div>
+              <div className="p-3">
+                {testDocument ? (
+                  <div className="aspect-[8.5/11] bg-slate-100 rounded border border-slate-200">
+                    {/* Document preview would go here */}
+                  </div>
+                ) : (
+                  <div className="aspect-[8.5/11] bg-slate-50 rounded border-2 border-dashed border-slate-200 flex flex-col items-center justify-center text-slate-400">
+                    <FileUp className="w-8 h-8 mb-2 opacity-50" />
+                    <p className="text-sm">No document uploaded</p>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="mt-3"
+                      onClick={() => document.getElementById('file-upload').click()}
+                    >
+                      <FileUp className="w-3.5 h-3.5 mr-1.5" />
+                      Upload Document
+                    </Button>
+                    <input
+                      id="file-upload"
+                      type="file"
+                      className="hidden"
+                      accept=".pdf,.png,.jpg,.jpeg"
+                      onChange={(e) => {
+                        if (e.target.files?.[0]) {
+                          setTestDocument(e.target.files[0]);
+                        }
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Fields Configuration */}
+          <div className="flex-1 space-y-3">
 
           {/* Fields Header */}
           <div className="bg-white rounded-lg border border-slate-200 shadow-sm">
@@ -217,6 +268,14 @@ export default function ExtractionConfigPage() {
                       {totalFields}
                     </Badge>
                   </div>
+                  <Button
+                    onClick={addField}
+                    variant="outline"
+                    className="h-8 px-3 text-sm"
+                  >
+                    <Plus className="w-4 h-4 mr-1.5" />
+                    Add Field
+                  </Button>
                   <Button
                     onClick={handleGenerateSchema}
                     disabled={isGeneratingSchema}
@@ -287,25 +346,17 @@ export default function ExtractionConfigPage() {
             </div>
           </div>
 
-          {/* Test Schema Section */}
-          {fields.length > 0 && (
-            <div className="bg-white rounded-lg border border-slate-200 shadow-sm">
-              <div className="p-3 flex items-center justify-between">
-                <div>
-                  <h3 className="text-sm font-semibold text-slate-700">Test Extraction</h3>
-                  <p className="text-xs text-slate-500 mt-0.5">Upload a document to test your schema configuration</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Button
-                    variant="outline"
-                    className="h-8 px-3 text-sm"
-                  >
-                    <FileUp className="w-3.5 h-3.5 mr-1.5" />
-                    Upload Document
-                  </Button>
+            {/* Test Schema Section */}
+            {fields.length > 0 && (
+              <div className="bg-white rounded-lg border border-slate-200 shadow-sm">
+                <div className="p-3 flex items-center justify-between">
+                  <div>
+                    <h3 className="text-sm font-semibold text-slate-700">Test Extraction</h3>
+                    <p className="text-xs text-slate-500 mt-0.5">Test your schema with the uploaded document</p>
+                  </div>
                   <Button
                     onClick={handleTestSchema}
-                    disabled={isTestingSchema}
+                    disabled={isTestingSchema || !testDocument}
                     className="bg-green-600 hover:bg-green-700 h-8 px-3 text-sm"
                   >
                     <Play className="w-3.5 h-3.5 mr-1.5" />
@@ -313,8 +364,8 @@ export default function ExtractionConfigPage() {
                   </Button>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
 
