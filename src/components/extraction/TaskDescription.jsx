@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { ChevronDown, ChevronUp, FileText, Pencil, Check, X } from "lucide-react";
+import { ChevronDown, ChevronUp, FileText, Pencil, Check, X, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function TaskDescription({ description, onDescriptionChange }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState(description);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const handleSave = () => {
     onDescriptionChange(editValue);
@@ -20,25 +21,45 @@ export default function TaskDescription({ description, onDescriptionChange }) {
     setIsEditing(false);
   };
 
+  const handleGeneratePrompt = async () => {
+    setIsGenerating(true);
+    // TODO: Call AI to generate prompt
+    setTimeout(() => {
+      setIsGenerating(false);
+    }, 2000);
+  };
+
   return (
     <Card className="bg-gradient-to-br from-slate-50 to-white border-slate-200 shadow-sm">
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm font-semibold text-slate-700 flex items-center gap-2">
             <FileText className="w-4 h-4 text-indigo-500" />
-            Task Description
+            Schema Prompt
           </CardTitle>
           <div className="flex items-center gap-2">
             {!isEditing && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setIsEditing(true)}
-                className="text-slate-500 hover:text-indigo-600 h-7 px-2"
-              >
-                <Pencil className="w-3.5 h-3.5 mr-1" />
-                Edit
-              </Button>
+              <>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleGeneratePrompt}
+                  disabled={isGenerating}
+                  className="text-slate-500 hover:text-purple-600 h-7 px-2"
+                >
+                  <Sparkles className="w-3.5 h-3.5 mr-1" />
+                  {isGenerating ? "Generating..." : "Generate by AI"}
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setIsEditing(true)}
+                  className="text-slate-500 hover:text-indigo-600 h-7 px-2"
+                >
+                  <Pencil className="w-3.5 h-3.5 mr-1" />
+                  Edit
+                </Button>
+              </>
             )}
             <Button
               variant="ghost"
