@@ -2,13 +2,14 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, ArrowLeftRight, Settings, FileSearch, UserPlus, ChevronRight, FolderOpen } from "lucide-react";
+import { LayoutDashboard, ArrowLeftRight, Settings, FileSearch, UserPlus, ChevronRight, FolderOpen, FlaskConical } from "lucide-react";
 
 const navItems = [
   { label: "Dashboard", page: "Dashboard", icon: LayoutDashboard },
   { label: "Transactions", page: "Transactions", icon: ArrowLeftRight },
   { label: "Document Config", page: "DocumentConfig", icon: FolderOpen },
   { label: "Extraction Config", page: "ExtractionConfig", icon: FileSearch },
+  { label: "Playground", page: "Playground", icon: FlaskConical },
   { label: "Onboarding", page: "Onboarding", icon: UserPlus },
 ];
 
