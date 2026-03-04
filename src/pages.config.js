@@ -48,10 +48,12 @@
  * The mainPage value must match a key in the PAGES object exactly.
  */
 import ExtractionConfig from './pages/ExtractionConfig';
+import Onboarding from './pages/Onboarding';
 
 
 export const PAGES = {
     "ExtractionConfig": ExtractionConfig,
+    "Onboarding": Onboarding,
 }
 
 export const pagesConfig = {
