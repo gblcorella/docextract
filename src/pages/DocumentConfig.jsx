@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
-import { ArrowLeft, FileText, Zap, Tag, EyeOff, ChevronRight, Search, Plus } from "lucide-react";
+import { ArrowLeft, FileText, Zap, Tag, EyeOff, ChevronRight, Search, Plus, History, Code2, LayoutList, Save, X, Sparkles, FileUp, Play } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { motion, AnimatePresence } from "framer-motion";
+import ConfigBar from "@/components/extraction/ConfigBar";
+import TaskDescription from "@/components/extraction/TaskDescription";
+import FieldCard from "@/components/extraction/FieldCard";
 
 const DOCUMENTS = [
   {
