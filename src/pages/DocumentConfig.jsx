@@ -384,10 +384,24 @@ function DocumentDetail({ doc, onBack }) {
 export default function DocumentConfig() {
   const [selectedDoc, setSelectedDoc] = useState(null);
   const [search, setSearch] = useState("");
+  const [addingDoc, setAddingDoc] = useState(false);
+  const [documents, setDocuments] = useState(DOCUMENTS);
 
-  const filtered = DOCUMENTS.filter((d) =>
+  const filtered = documents.filter((d) =>
     !search || d.name.toLowerCase().includes(search.toLowerCase()) || d.fileName.toLowerCase().includes(search.toLowerCase())
   );
+
+  if (addingDoc) {
+    return (
+      <AddDocumentWizard
+        onCancel={() => setAddingDoc(false)}
+        onSave={(newDoc) => {
+          setDocuments((prev) => [...prev, newDoc]);
+          setAddingDoc(false);
+        }}
+      />
+    );
+  }
 
   if (selectedDoc) {
     return <DocumentDetail doc={selectedDoc} onBack={() => setSelectedDoc(null)} />;
@@ -398,9 +412,9 @@ export default function DocumentConfig() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-slate-800">Document Config</h1>
-          <p className="text-sm text-slate-500 mt-0.5">{DOCUMENTS.length} documents configured</p>
+          <p className="text-sm text-slate-500 mt-0.5">{documents.length} documents configured</p>
         </div>
-        <Button className="bg-indigo-600 hover:bg-indigo-700">
+        <Button className="bg-indigo-600 hover:bg-indigo-700" onClick={() => setAddingDoc(true)}>
           <Plus className="w-4 h-4 mr-2" />Add Document
         </Button>
       </div>
