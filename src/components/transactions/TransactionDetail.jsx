@@ -266,6 +266,92 @@ function ParseReview() {
   );
 }
 
+function NotifyCard({ txnId }) {
+  const [emails, setEmails] = useState([]);
+  const [input, setInput] = useState("");
+  const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+
+  const addEmail = () => {
+    const trimmed = input.trim();
+    if (trimmed && !emails.includes(trimmed)) {
+      setEmails(e => [...e, trimmed]);
+      setInput("");
+      setSent(false);
+    }
+  };
+
+  const removeEmail = (i) => setEmails(e => e.filter((_, idx) => idx !== i));
+
+  const handleSend = async () => {
+    if (!emails.length) return;
+    setSending(true);
+    await new Promise(r => setTimeout(r, 900));
+    setSending(false);
+    setSent(true);
+  };
+
+  return (
+    <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+      <div className="flex items-center gap-2 mb-4">
+        <Mail className="w-4 h-4 text-indigo-500" />
+        <h3 className="text-sm font-semibold text-slate-700">Notify via Email</h3>
+      </div>
+
+      <div className="flex gap-2 mb-3">
+        <input
+          type="email"
+          placeholder="Enter email address"
+          value={input}
+          onChange={e => { setInput(e.target.value); setSent(false); }}
+          onKeyDown={e => e.key === "Enter" && addEmail()}
+          className="flex-1 text-sm border border-slate-200 rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-400"
+        />
+        <button
+          onClick={addEmail}
+          className="p-2 rounded-lg bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition-colors"
+        >
+          <Plus className="w-4 h-4" />
+        </button>
+      </div>
+
+      {emails.length > 0 && (
+        <div className="space-y-1.5 mb-4">
+          {emails.map((email, i) => (
+            <div key={i} className="flex items-center justify-between bg-slate-50 rounded-lg px-3 py-1.5 text-sm text-slate-700">
+              <span className="truncate">{email}</span>
+              <button onClick={() => removeEmail(i)} className="ml-2 text-slate-300 hover:text-red-400 transition-colors flex-shrink-0">
+                <Trash2 className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {sent && (
+        <div className="flex items-center gap-2 text-green-600 text-xs bg-green-50 border border-green-200 rounded-lg px-3 py-2 mb-3">
+          <CheckCircle2 className="w-3.5 h-3.5" />
+          Notifications sent successfully.
+        </div>
+      )}
+
+      <Button
+        size="sm"
+        className="w-full bg-indigo-600 hover:bg-indigo-700 h-8 text-xs"
+        disabled={!emails.length || sending}
+        onClick={handleSend}
+      >
+        {sending ? (
+          <RefreshCw className="w-3.5 h-3.5 mr-1.5 animate-spin" />
+        ) : (
+          <Send className="w-3.5 h-3.5 mr-1.5" />
+        )}
+        {sending ? "Sending…" : "Send Notification"}
+      </Button>
+    </div>
+  );
+}
+
 export default function TransactionDetail({ txn, onBack, onRerun, onReject }) {
   const [activeView, setActiveView] = useState("details");
 
