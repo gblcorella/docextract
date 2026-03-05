@@ -162,9 +162,9 @@ export default function ProfileDetail({ profile, onBack, onSave }) {
       <div className="bg-white border-b border-slate-200 px-6">
         <div className="flex gap-0">
           {[
-            { key: "details", label: "Details" },
-            { key: "audit", label: "Audit History", icon: Clock },
-          ].map(({ key, label, icon: Icon }) => (
+            { key: "details", label: "Details", showIcon: false },
+            { key: "audit", label: "Audit History", showIcon: true },
+          ].map(({ key, label, showIcon }) => (
             <button
               key={key}
               onClick={() => setActiveTab(key)}
@@ -173,7 +173,7 @@ export default function ProfileDetail({ profile, onBack, onSave }) {
                 activeTab === key ? "border-indigo-600 text-indigo-600" : "border-transparent text-slate-500 hover:text-slate-700"
               )}
             >
-              {Icon && <Icon className="w-4 h-4" />}{label}
+              {showIcon && <Clock className="w-4 h-4" />}{label}
             </button>
           ))}
         </div>
