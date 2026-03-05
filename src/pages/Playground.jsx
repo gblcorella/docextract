@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Upload, FileText, Download, ChevronLeft, ChevronRight, Plus, Share2, Scissors, Scan, FileSearch2, MessageSquare, X, Lightbulb, FileJson, PenLine, RefreshCw, Copy, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
