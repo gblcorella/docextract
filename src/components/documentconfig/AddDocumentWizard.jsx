@@ -88,37 +88,6 @@ function StepIdentity({ data, onChange }) {
         />
         <p className="text-xs text-slate-400 mt-1">A human-readable label for this document configuration.</p>
       </div>
-      <div>
-        <label className="block text-sm font-medium text-slate-700 mb-3">Document Type <span className="text-rose-500">*</span></label>
-        <div className="grid grid-cols-2 gap-3 max-w-2xl">
-          {DOCUMENT_TYPES.map((t) => (
-            <button
-              key={t.value}
-              onClick={() => onChange({ type: t.value, typeLabel: t.label })}
-              className={cn(
-                "text-left p-3 rounded-lg border-2 transition-all",
-                data.type === t.value
-                  ? "border-indigo-500 bg-indigo-50"
-                  : "border-slate-200 bg-white hover:border-slate-300"
-              )}
-            >
-              <p className={cn("text-sm font-semibold", data.type === t.value ? "text-indigo-700" : "text-slate-700")}>{t.label}</p>
-              <p className="text-xs text-slate-400 mt-0.5">{t.desc}</p>
-            </button>
-          ))}
-        </div>
-      </div>
-      {data.type === "custom" && (
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">Custom Type Label</label>
-          <Input
-            placeholder="e.g. Side Pocket Report"
-            value={data.customTypeLabel || ""}
-            onChange={(e) => onChange({ customTypeLabel: e.target.value })}
-            className="max-w-md"
-          />
-        </div>
-      )}
     </div>
   );
 }
