@@ -259,9 +259,17 @@ function StepReview({ data }) {
 }
 
 // ── Main Wizard ───────────────────────────────────────────────────────────────
-export default function AddDocumentWizard({ onCancel, onSave }) {
+export default function AddDocumentWizard({ initialData, onCancel, onSave }) {
+  const isEditing = !!initialData;
   const [step, setStep] = useState(0);
-  const [data, setData] = useState({
+  const [data, setData] = useState(initialData ? {
+    name: initialData.name || "",
+    capabilities: Object.keys(initialData.configs || {}).reduce((acc, key) => {
+      if (initialData.configs[key]?.enabled) acc[key] = true;
+      return acc;
+    }, {}),
+    preProcessing: initialData.preProcessing || {},
+  } : {
     name: "",
     capabilities: {},
     preProcessing: {},
