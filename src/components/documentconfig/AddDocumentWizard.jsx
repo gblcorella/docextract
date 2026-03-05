@@ -18,12 +18,6 @@ const DOCUMENT_TYPES = [
   { value: "custom", label: "Custom", desc: "Other document type" },
 ];
 
-const INGESTION_METHODS = [
-  { value: "email", label: "Email Ingestion", icon: Mail, desc: "Documents arrive via email attachment" },
-  { value: "api", label: "API Upload", icon: Globe, desc: "Programmatic upload via REST API" },
-  { value: "s3", label: "S3 / Cloud Storage", icon: Cloud, desc: "Pull from S3 bucket or cloud storage" },
-  { value: "sftp", label: "SFTP / FTP", icon: Database, desc: "Scheduled pull from SFTP server" },
-];
 
 const CAPABILITIES = [
   {
