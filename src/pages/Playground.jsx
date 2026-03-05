@@ -271,7 +271,7 @@ export default function Playground() {
     document.body.style.userSelect = "none";
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const onMove = (e) => {
       if (!dragging.current || !containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
