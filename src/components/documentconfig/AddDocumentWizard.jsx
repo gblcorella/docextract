@@ -347,6 +347,31 @@ function StepReview({ data }) {
             </div>
           ))}
         </div>
+        <div className="border-t border-slate-200 pt-4">
+          <p className="text-xs text-slate-400 uppercase tracking-wide font-semibold mb-3">Post-Processing</p>
+          <div className="space-y-2">
+            <div>
+              <p className="text-xs text-slate-500 mb-1">Output Format</p>
+              <p className="text-sm font-semibold text-slate-800 capitalize">{data.postProcessing?.outputFormat || "—"}</p>
+            </div>
+            <div>
+              <p className="text-xs text-slate-500 mb-1">Storage</p>
+              <p className="text-sm font-semibold text-slate-800 capitalize">{data.postProcessing?.storage || "—"}</p>
+            </div>
+            <div>
+              <p className="text-xs text-slate-500 mb-1">Notifications</p>
+              {data.postProcessing?.notifications && data.postProcessing.notifications.length > 0 ? (
+                <div className="flex flex-wrap gap-1">
+                  {data.postProcessing.notifications.map((n) => (
+                    <span key={n} className="inline-flex text-xs bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full">{n}</span>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-slate-400">None</p>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
       <div className="bg-indigo-50 border border-indigo-100 rounded-lg p-3 flex gap-2">
         <Sparkles className="w-4 h-4 text-indigo-500 flex-shrink-0 mt-0.5" />
