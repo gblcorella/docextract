@@ -394,6 +394,7 @@ export default function DocumentConfig() {
   const [selectedDoc, setSelectedDoc] = useState(null);
   const [search, setSearch] = useState("");
   const [addingDoc, setAddingDoc] = useState(false);
+  const [editingDoc, setEditingDoc] = useState(null);
   const [documents, setDocuments] = useState(DOCUMENTS);
 
   const filtered = documents.filter((d) =>
@@ -412,8 +413,21 @@ export default function DocumentConfig() {
     );
   }
 
+  if (editingDoc) {
+    return (
+      <AddDocumentWizard
+        initialData={editingDoc}
+        onCancel={() => setEditingDoc(null)}
+        onSave={(updatedDoc) => {
+          setDocuments((prev) => prev.map((d) => d.id === editingDoc.id ? { ...d, ...updatedDoc } : d));
+          setEditingDoc(null);
+        }}
+      />
+    );
+  }
+
   if (selectedDoc) {
-    return <DocumentDetail doc={selectedDoc} onBack={() => setSelectedDoc(null)} />;
+    return <DocumentDetail doc={selectedDoc} onBack={() => setSelectedDoc(null)} onEdit={setEditingDoc} />;
   }
 
   return (
