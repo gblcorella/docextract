@@ -138,7 +138,7 @@ export default function Onboarding() {
       appName: profile.appName || "New App",
       contactEmail: profile.contactEmail || "",
       approvers: profile.approvers || [],
-      useCases: (useCasesData.useCases || []).map((uc) => ({ type: uc.type, name: uc.name })),
+      selectedDocConfigs: docConfigData.selectedDocConfigs || [],
       documentType: docPrefs.documentType,
     };
     setProfiles((prev) => [...prev, newProfile]);
