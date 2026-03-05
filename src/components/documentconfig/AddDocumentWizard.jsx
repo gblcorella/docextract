@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import {
   ArrowLeft, ArrowRight, Check, Zap, Scan, Scissors, EyeOff,
-  ChevronRight, Plus, X, Sparkles
+  ChevronRight, Plus, X, Sparkles, FileJson, HardDrive, Bell
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
