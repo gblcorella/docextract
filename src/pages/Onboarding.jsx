@@ -138,7 +138,6 @@ export default function Onboarding() {
       contactEmail: profile.contactEmail || "",
       approvers: profile.approvers || [],
       selectedDocConfigs: docConfigData.selectedDocConfigs || [],
-      documentType: docPrefs.documentType,
     };
     setProfiles((prev) => [...prev, newProfile]);
     setView("list");
