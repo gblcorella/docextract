@@ -288,6 +288,7 @@ export default function AddDocumentWizard({ onCancel, onSave }) {
   const stepContent = [
     <StepIdentity key="identity" data={data} onChange={update} />,
     <StepCapabilities key="capabilities" capabilities={data.capabilities} onSelect={selectCapability} />,
+    <StepPreProcessing key="preprocessing" settings={data.preProcessing} onChange={(preProcessing) => update({ preProcessing })} />,
     <StepReview key="review" data={data} />,
   ];
 
