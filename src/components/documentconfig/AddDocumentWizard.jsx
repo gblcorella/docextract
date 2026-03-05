@@ -261,13 +261,6 @@ export default function AddDocumentWizard({ onCancel, onSave }) {
     }));
   };
 
-  const updateCapConfig = (key, patch) => {
-    setData((d) => ({
-      ...d,
-      capConfigs: { ...d.capConfigs, [key]: { ...(d.capConfigs[key] || {}), ...patch } },
-    }));
-  };
-
   const canNext = () => {
     if (step === 0) return !!data.name.trim();
     return true;
