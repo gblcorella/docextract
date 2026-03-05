@@ -121,6 +121,23 @@ export default function Transactions() {
   const [selectedTxn, setSelectedTxn] = useState(null);
   const [transactions, setTransactions] = useState(MOCK_TRANSACTIONS);
 
+  if (selectedTxn) {
+    return (
+      <TransactionDetail
+        txn={selectedTxn}
+        onBack={() => setSelectedTxn(null)}
+        onRerun={(txn) => {
+          handleRerunFn(txn);
+          setSelectedTxn(prev => prev?.id === txn.id ? { ...prev, status: "processing" } : prev);
+        }}
+        onReject={(txn) => {
+          handleRejectFn(txn);
+          setSelectedTxn(prev => prev?.id === txn.id ? { ...prev, status: "rejected", rejectedBy: "you@firm.com" } : prev);
+        }}
+      />
+    );
+  }
+
   const filtered = transactions.filter((t) => {
     const matchSearch = !search || t.file.toLowerCase().includes(search.toLowerCase()) || t.id.toLowerCase().includes(search.toLowerCase());
     const matchStatus = statusFilter === "all" || t.status === statusFilter;
