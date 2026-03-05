@@ -223,10 +223,10 @@ export default function AddDocumentWizard({ onCancel, onSave }) {
 
   const update = (patch) => setData((d) => ({ ...d, ...patch }));
 
-  const toggleCapability = (key) => {
+  const selectCapability = (key) => {
     setData((d) => ({
       ...d,
-      capabilities: { ...d.capabilities, [key]: !d.capabilities[key] },
+      capabilities: { [key]: true },
     }));
   };
 
