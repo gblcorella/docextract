@@ -118,7 +118,6 @@ export default function ProfileDetail({ profile, onBack, onSave }) {
   const handleCancel = () => {
     setForm({ ...profile });
     setDocConfigData({ selectedDocConfigs: profile.selectedDocConfigs || [] });
-    setDocPrefs({ documentType: profile.documentType || "alts-schedule", rawTextModel: profile.rawTextModel || "textract", instructions: profile.instructions || "" });
     setEditing(false);
   };
 
