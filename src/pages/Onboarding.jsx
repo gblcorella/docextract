@@ -116,8 +116,9 @@ function ProfileList({ profiles, onAdd, onDelete, onSelect }) {
 }
 
 export default function Onboarding() {
-  const [view, setView] = useState("list"); // "list" | "wizard"
+  const [view, setView] = useState("list"); // "list" | "wizard" | "detail"
   const [profiles, setProfiles] = useState(MOCK_PROFILES);
+  const [selectedProfile, setSelectedProfile] = useState(null);
   const [currentStep, setCurrentStep] = useState(0);
   const [profile, setProfile] = useState({});
   const [docConfigData, setDocConfigData] = useState({ selectedDocConfigs: [] });
