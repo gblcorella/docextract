@@ -8,7 +8,6 @@ const navItems = [
   { label: "Dashboard", page: "Dashboard", icon: LayoutDashboard },
   { label: "Transactions", page: "Transactions", icon: ArrowLeftRight },
   { label: "Document Config", page: "DocumentConfig", icon: FolderOpen },
-  { label: "Extraction Config", page: "ExtractionConfig", icon: FileSearch },
   { label: "Playground", page: "Playground", icon: FlaskConical },
   { label: "Onboarding", page: "Onboarding", icon: UserPlus },
   { label: "Support", page: "Support", icon: LifeBuoy },
