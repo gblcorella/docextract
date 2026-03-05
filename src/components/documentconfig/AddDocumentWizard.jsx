@@ -426,6 +426,7 @@ export default function AddDocumentWizard({ initialData, onCancel, onSave }) {
       fileName: `${data.name.replace(/\s+/g, "_")}.pdf`,
       configs,
       preProcessing: data.preProcessing,
+      postProcessing: data.postProcessing,
     });
   };
 
