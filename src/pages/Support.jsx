@@ -86,18 +86,7 @@ export default function Support() {
     const knowledgeContext = buildKnowledgeContext();
     const history = messages.map(m => `${m.role === "user" ? "User" : "Assistant"}: ${m.content}`).join("\n");
 
-    const prompt = `You are a helpful, friendly support assistant for DocExtract — a document intelligence platform.
-Answer using ONLY the knowledge base below. Be concise and practical. Format code samples clearly.
-If the user's question is not covered by the knowledge base, politely say you don't have that info and suggest contacting support@docextract.io.
-
-KNOWLEDGE BASE:
-${knowledgeContext}
-
-CONVERSATION HISTORY:
-${history}
-
-User: ${userText}
-Assistant:`;
+    const prompt = `You are a helpful, friendly support assistant for DocExtract — a document intelligence platform.\nAnswer using ONLY the knowledge base below. Be concise and practical. Format code samples clearly.\nIf the user's question is not covered by the knowledge base, politely say you don't have that info and suggest contacting support@docextract.io.\n\nKNOWLEDGE BASE:\n${knowledgeContext}\n\nCONVERSATION HISTORY:\n${history}\n\nUser: ${userText}\nAssistant:`;
 
     const response = await base44.integrations.Core.InvokeLLM({ prompt });
     setMessages(prev => [...prev, { role: "assistant", content: response }]);
