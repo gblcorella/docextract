@@ -259,8 +259,8 @@ export default function Playground() {
   const [page, setPage] = useState(1);
   // leftPct: percentage of total width for the doc panel (35–75%)
   const [leftPct, setLeftPct] = useState(38);
-  const containerRef = React.useRef(null);
-  const dragging = React.useRef(false);
+  const containerRef = useRef(null);
+  const dragging = useRef(false);
 
   const handleUpload = () => document.getElementById("playground-upload").click();
 
