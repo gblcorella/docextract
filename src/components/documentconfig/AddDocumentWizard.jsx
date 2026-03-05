@@ -234,6 +234,21 @@ function StepReview({ data }) {
             </div>
           )}
         </div>
+        <div className="border-t border-slate-200 pt-4">
+          <p className="text-xs text-slate-400 uppercase tracking-wide font-semibold mb-3">Pre-Processing</p>
+          {[
+            { key: "autoOrientation", label: "Auto Orientation Detection & Correction" },
+            { key: "dpiCorrection", label: "DPI Quality Correction" },
+            { key: "rotationCorrection", label: "Rotation Correction" },
+          ].map(({ key, label }) => (
+            <div key={key} className="flex items-center gap-2 mb-1.5">
+              <div className={cn("w-4 h-4 rounded-full flex items-center justify-center", data.preProcessing?.[key] ? "bg-indigo-600" : "bg-slate-200")}>
+                {data.preProcessing?.[key] && <Check className="w-2.5 h-2.5 text-white" />}
+              </div>
+              <span className={cn("text-sm", data.preProcessing?.[key] ? "text-slate-800" : "text-slate-400")}>{label}</span>
+            </div>
+          ))}
+        </div>
       </div>
       <div className="bg-indigo-50 border border-indigo-100 rounded-lg p-3 flex gap-2">
         <Sparkles className="w-4 h-4 text-indigo-500 flex-shrink-0 mt-0.5" />
