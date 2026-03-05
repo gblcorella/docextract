@@ -56,6 +56,26 @@ export default function ConfigBar({ config, onConfigChange }) {
 
         <div className="flex items-center gap-2">
           <Label className="text-xs text-slate-500 flex items-center gap-1">
+            <Layers className="w-3 h-3" />
+            Mode
+          </Label>
+          <Select 
+            value={config.mode} 
+            onValueChange={(v) => onConfigChange({ ...config, mode: v })}
+          >
+            <SelectTrigger className="h-7 w-[100px] text-xs">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="text">Text</SelectItem>
+              <SelectItem value="accurate">Accurate</SelectItem>
+              <SelectItem value="fast">Fast</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <Label className="text-xs text-slate-500 flex items-center gap-1">
             <Thermometer className="w-3 h-3" />
             Temperature
           </Label>
