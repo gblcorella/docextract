@@ -367,8 +367,7 @@ export default function AddDocumentWizard({ onCancel, onSave }) {
   };
 
   const canNext = () => {
-    if (step === 0) return !!data.name.trim() && !!data.type;
-    if (step === 1) return !!data.ingestion;
+    if (step === 0) return !!data.name.trim();
     return true;
   };
 
