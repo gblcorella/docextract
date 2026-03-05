@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import {
   ArrowLeft, Download, RotateCcw, ThumbsDown, AlertTriangle,
   CheckCircle2, Clock, XCircle, RefreshCw, FileText, UserCheck,
-  Zap, Scissors, Scan, ChevronRight, Check, X, Edit2, Save, ChevronDown
+  Zap, Scissors, Scan, ChevronRight, Check, X, Edit2, Save, ChevronDown, Mail, Send, Plus, Trash2
 } from "lucide-react";
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger
