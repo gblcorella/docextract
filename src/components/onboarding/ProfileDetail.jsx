@@ -201,7 +201,12 @@ export default function ProfileDetail({ profile, onBack, onSave }) {
               className="space-y-5">
               {/* Profile Info */}
               <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-5">
-                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Profile Info</p>
+                <div className="flex items-center justify-between">
+                  <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Profile Info</p>
+                  <Badge variant={isActive ? "default" : "secondary"} className="text-xs">
+                    {isActive ? "Active" : "Inactive"}
+                  </Badge>
+                </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1.5">
