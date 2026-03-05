@@ -321,7 +321,7 @@ function DocumentDetail({ doc, onBack }) {
   const activeConfigs = CONFIG_TABS.filter((t) => doc.configs[t.key]?.enabled);
 
   return (
-    <div className="p-8 max-w-3xl">
+    <div className="p-8">
       <button onClick={onBack} className="flex items-center gap-1.5 text-sm text-slate-500 hover:text-indigo-600 mb-6 transition-colors">
         <ArrowLeft className="w-4 h-4" />Back to documents
       </button>
