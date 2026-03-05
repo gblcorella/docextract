@@ -117,7 +117,7 @@ export default function Onboarding() {
   const [profiles, setProfiles] = useState(MOCK_PROFILES);
   const [currentStep, setCurrentStep] = useState(0);
   const [profile, setProfile] = useState({});
-  const [useCasesData, setUseCasesData] = useState({ useCases: [] });
+  const [docConfigData, setDocConfigData] = useState({ selectedDocConfigs: [] });
   const [docPrefs, setDocPrefs] = useState({ documentType: "alts-schedule", rawTextModel: "textract" });
 
   const goNext = () => setCurrentStep((s) => Math.min(s + 1, steps.length - 1));
