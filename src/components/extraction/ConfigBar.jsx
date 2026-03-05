@@ -3,7 +3,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
-import { Settings2, Cpu, Brain, Thermometer } from "lucide-react";
+import { Settings2, Cpu, Brain, Thermometer, Layers } from "lucide-react";
 
 export default function ConfigBar({ config, onConfigChange }) {
   return (
