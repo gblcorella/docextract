@@ -47,13 +47,16 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
+import DocumentConfig from './pages/DocumentConfig';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
+    "DocumentConfig": DocumentConfig,
 }
 
 export const pagesConfig = {
+    mainPage: "DocumentConfig",
     Pages: PAGES,
     Layout: __Layout,
 };
