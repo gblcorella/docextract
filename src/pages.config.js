@@ -47,26 +47,13 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
-import Dashboard from './pages/Dashboard';
-import ExtractionConfig from './pages/ExtractionConfig';
-import Onboarding from './pages/Onboarding';
-import Transactions from './pages/Transactions';
-import DocumentConfig from './pages/DocumentConfig';
-import Playground from './pages/Playground';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
-    "Dashboard": Dashboard,
-    "ExtractionConfig": ExtractionConfig,
-    "Onboarding": Onboarding,
-    "Transactions": Transactions,
-    "DocumentConfig": DocumentConfig,
-    "Playground": Playground,
 }
 
 export const pagesConfig = {
-    mainPage: "ExtractionConfig",
     Pages: PAGES,
     Layout: __Layout,
 };
