@@ -153,6 +153,8 @@ function ExtractionDetail({ config }) {
 
   if (!config.enabled) return <DisabledState label="Extraction" />;
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks -- safe: hooks are all declared above, return is just early render
+
   const totalFields = fields.reduce((acc, f) => acc + 1 + (f.children?.length || 0), 0);
   const addField = () => setFields([...fields, { id: Date.now().toString(), name: "", description: "", type: "text", children: [] }]);
   const addChildToField = (parentId) => {
