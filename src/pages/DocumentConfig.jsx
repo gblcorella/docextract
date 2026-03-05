@@ -473,7 +473,7 @@ export default function DocumentConfig() {
                 </div>
               </div>
               <Button variant="outline" size="sm" onClick={() => setSelectedDoc(doc)} className="flex-shrink-0 text-slate-600">
-                View Detail<ChevronRight className="w-4 h-4 ml-1" />
+                Configure<ChevronRight className="w-4 h-4 ml-1" />
               </Button>
             </div>
           );
