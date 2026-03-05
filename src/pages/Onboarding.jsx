@@ -127,7 +127,6 @@ export default function Onboarding() {
     setCurrentStep(0);
     setProfile({});
     setDocConfigData({ selectedDocConfigs: [] });
-    setDocPrefs({ documentType: "alts-schedule", rawTextModel: "textract" });
     setView("wizard");
   };
 
