@@ -129,8 +129,8 @@ const initialFields = [
 ];
 
 const initialConfig = {
-  engine: "gen-ai", documentType: "alts-schedule", model: "gpt-4",
-  temperature: 0, mode: "text", rawTextModel: "textract", enableEvaluation: true, evaluationModel: "default",
+  engine: "gen-ai", model: "gpt-4",
+  temperature: 0, mode: "text", enableEvaluation: true,
 };
 
 const initialDescription = `You are an expert in extracting data from the "Schedule of Investments" section in quarterly reports. Your task is to parse the provided document and extract the complete Alts Performance report strictly following the JSON schema.`;
