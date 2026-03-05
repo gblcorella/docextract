@@ -248,11 +248,8 @@ export default function AddDocumentWizard({ onCancel, onSave }) {
   const [step, setStep] = useState(0);
   const [data, setData] = useState({
     name: "",
-    type: "",
-    typeLabel: "",
-    ingestion: "",
     capabilities: {},
-    capConfigs: {},
+    preProcessing: {},
   });
 
   const update = (patch) => setData((d) => ({ ...d, ...patch }));
