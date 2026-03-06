@@ -531,7 +531,7 @@ function DocumentDetail({ doc, onBack, onEdit, allDocuments }) {
       <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
         <AnimatePresence mode="wait">
           <motion.div key={activeTab} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.15 }}>
-            {activeTab === "extraction" && <ExtractionDetail config={doc.configs.extraction} />}
+            {activeTab === "extraction" && <ExtractionDetail config={doc.configs.extraction} allDocuments={allDocuments} currentDocId={doc.id} />}
             {activeTab === "parse" && <ParseDetail config={doc.configs.parse} />}
             {activeTab === "split" && <SplitDetail config={doc.configs.split} />}
             {activeTab === "redaction" && <RedactionDetail config={doc.configs.redaction} />}
