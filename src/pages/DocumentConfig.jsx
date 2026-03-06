@@ -579,7 +579,7 @@ export default function DocumentConfig() {
   }
 
   if (selectedDoc) {
-    return <DocumentDetail doc={selectedDoc} onBack={() => setSelectedDoc(null)} onEdit={setEditingDoc} />;
+    return <DocumentDetail doc={selectedDoc} onBack={() => setSelectedDoc(null)} onEdit={setEditingDoc} allDocuments={documents} />;
   }
 
   return (
