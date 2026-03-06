@@ -31,6 +31,26 @@ export default function StepProfile({ data, onChange }) {
     }
   };
 
+  const addFid = () => {
+    const val = fidInput.trim();
+    if (!val) return;
+    const current = data.fids || [];
+    if (!current.includes(val)) onChange({ ...data, fids: [...current, val] });
+    setFidInput("");
+  };
+
+  const removeFid = (val) => onChange({ ...data, fids: (data.fids || []).filter((v) => v !== val) });
+
+  const addSid = () => {
+    const val = sidInput.trim();
+    if (!val) return;
+    const current = data.sids || [];
+    if (!current.includes(val)) onChange({ ...data, sids: [...current, val] });
+    setSidInput("");
+  };
+
+  const removeSid = (val) => onChange({ ...data, sids: (data.sids || []).filter((v) => v !== val) });
+
   return (
     <div className="space-y-5">
       <div>
