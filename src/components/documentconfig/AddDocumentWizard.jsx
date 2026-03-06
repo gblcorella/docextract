@@ -205,69 +205,116 @@ function StepPreProcessing({ settings, onChange }) {
 }
 
 // ── Step 3: Post-Processing ──────────────────────────────────────────────────
+function ConfigField({ label, placeholder, value, onChange }) {
+  return (
+    <div className="mt-2 ml-6 p-3 bg-white border border-indigo-100 rounded-lg space-y-1">
+      <label className="text-xs text-slate-500 font-medium">{label}</label>
+      <Input
+        className="h-7 text-xs"
+        placeholder={placeholder}
+        value={value || ""}
+        onChange={(e) => onChange(e.target.value)}
+        onClick={(e) => e.stopPropagation()}
+      />
+    </div>
+  );
+}
+
 function StepPostProcessing({ settings, onChange }) {
   const formats = [
-    { key: "json", label: "JSON", icon: FileJson, desc: "Structured JSON format for API integration." },
-    { key: "csv", label: "CSV", icon: FileJson, desc: "Comma-separated values for spreadsheets." },
-    { key: "xml", label: "XML", icon: FileJson, desc: "XML format for enterprise systems." },
+    { key: "json", label: "JSON", desc: "Structured JSON format for API integration.", configLabel: "JSON Schema URL (optional)", configPlaceholder: "https://example.com/schema.json" },
+    { key: "csv", label: "CSV", desc: "Comma-separated values for spreadsheets.", configLabel: "Delimiter character", configPlaceholder: "e.g. , or ;" },
+    { key: "xml", label: "XML", desc: "XML format for enterprise systems.", configLabel: "Root element name", configPlaceholder: "e.g. documents" },
   ];
 
   const storageOptions = [
-    { key: "localStorage", label: "Local Storage", desc: "Store in local file system." },
-    { key: "s3", label: "AWS S3", desc: "Store in Amazon S3 bucket." },
-    { key: "googleCloud", label: "Google Cloud", desc: "Store in Google Cloud Storage." },
+    { key: "s3", label: "AWS S3", desc: "Store outputs in an Amazon S3 bucket.", configLabel: "S3 Bucket Name", configPlaceholder: "e.g. my-doc-bucket" },
+    { key: "cds", label: "CDS", desc: "Store in the Content Delivery Storage.", configLabel: "CDS Endpoint", configPlaceholder: "https://cds.example.com/store" },
+    { key: "database", label: "Database", desc: "Persist results to a relational database.", configLabel: "Table / Collection Name", configPlaceholder: "e.g. extraction_results" },
   ];
 
   const notificationOptions = [
-    { key: "email", label: "Email Notification", desc: "Send notification when processing completes." },
-    { key: "webhook", label: "Webhook", desc: "Post results to external webhook URL." },
-    { key: "slack", label: "Slack", desc: "Send notification to Slack channel." },
+    { key: "email", label: "Email Notification", desc: "Send an email when processing completes.", configLabel: "Recipient Email(s)", configPlaceholder: "e.g. ops@company.com" },
+    { key: "webhook", label: "Webhook", desc: "POST results to an external webhook URL.", configLabel: "Webhook URL", configPlaceholder: "https://hooks.example.com/..." },
+    { key: "kafka", label: "Kafka", desc: "Publish events to a Kafka topic.", configLabel: "Kafka Topic", configPlaceholder: "e.g. doc-processing-events" },
+    { key: "workhub", label: "Workhub Ticket", desc: "Create a Workhub ticket upon completion.", configLabel: "Workhub Project Key", configPlaceholder: "e.g. DOC-OPS" },
   ];
 
+  const toggleNotification = (key) => {
+    const current = settings.notifications || [];
+    const updated = current.includes(key) ? current.filter(n => n !== key) : [...current, key];
+    onChange({ ...settings, notifications: updated });
+  };
+
+  const updateConfig = (section, key, value) => {
+    onChange({ ...settings, [section]: { ...(settings[section] || {}), [key]: value } });
+  };
+
   return (
-    <div className="space-y-5 max-w-2xl">
+    <div className="space-y-6 max-w-2xl">
       {/* Output Format */}
       <div>
-        <p className="text-sm text-slate-500 mb-3 flex items-center gap-1.5"><FileJson className="w-4 h-4" />Output Format</p>
-        <div className="grid grid-cols-3 gap-2">
-          {formats.map(({ key, label, desc }) => (
-            <button
-              key={key}
-              onClick={() => onChange({ ...settings, outputFormat: key })}
-              className={cn(
-                "rounded-lg border-2 p-3 text-left transition-all",
-                settings.outputFormat === key
-                  ? "border-indigo-600 bg-indigo-50"
-                  : "border-slate-200 bg-white hover:border-slate-300"
+        <p className="text-sm font-medium text-slate-700 mb-3 flex items-center gap-1.5"><FileJson className="w-4 h-4 text-indigo-500" />Output Format</p>
+        <div className="space-y-2">
+          {formats.map(({ key, label, desc, configLabel, configPlaceholder }) => (
+            <div key={key}>
+              <div
+                onClick={() => onChange({ ...settings, outputFormat: settings.outputFormat === key ? null : key })}
+                className={cn(
+                  "rounded-lg border-2 p-3 flex items-start justify-between gap-3 cursor-pointer transition-all",
+                  settings.outputFormat === key ? "border-indigo-200 bg-indigo-50" : "border-slate-200 bg-white hover:border-slate-300"
+                )}
+              >
+                <div>
+                  <p className={cn("text-sm font-semibold", settings.outputFormat === key ? "text-slate-800" : "text-slate-600")}>{label}</p>
+                  <p className="text-xs text-slate-500 mt-0.5">{desc}</p>
+                </div>
+                <div className={cn("w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5", settings.outputFormat === key ? "border-indigo-600 bg-indigo-600" : "border-slate-300 bg-white")}>
+                  {settings.outputFormat === key && <Check className="w-3 h-3 text-white" />}
+                </div>
+              </div>
+              {settings.outputFormat === key && (
+                <ConfigField
+                  label={configLabel}
+                  placeholder={configPlaceholder}
+                  value={settings.formatConfig?.[key]}
+                  onChange={(v) => updateConfig("formatConfig", key, v)}
+                />
               )}
-            >
-              <p className={cn("text-sm font-semibold", settings.outputFormat === key ? "text-slate-800" : "text-slate-600")}>{label}</p>
-              <p className="text-xs text-slate-500 mt-0.5">{desc}</p>
-            </button>
+            </div>
           ))}
         </div>
       </div>
 
       {/* Storage Options */}
       <div>
-        <p className="text-sm text-slate-500 mb-3 flex items-center gap-1.5"><HardDrive className="w-4 h-4" />Storage Options</p>
+        <p className="text-sm font-medium text-slate-700 mb-3 flex items-center gap-1.5"><HardDrive className="w-4 h-4 text-indigo-500" />Storage Options</p>
         <div className="space-y-2">
-          {storageOptions.map(({ key, label, desc }) => (
-            <div
-              key={key}
-              onClick={() => onChange({ ...settings, storage: settings.storage === key ? null : key })}
-              className={cn(
-                "rounded-lg border-2 p-3 flex items-start justify-between gap-3 cursor-pointer transition-all",
-                settings.storage === key ? "border-indigo-200 bg-indigo-50" : "border-slate-200 bg-white hover:border-slate-300"
+          {storageOptions.map(({ key, label, desc, configLabel, configPlaceholder }) => (
+            <div key={key}>
+              <div
+                onClick={() => onChange({ ...settings, storage: settings.storage === key ? null : key })}
+                className={cn(
+                  "rounded-lg border-2 p-3 flex items-start justify-between gap-3 cursor-pointer transition-all",
+                  settings.storage === key ? "border-indigo-200 bg-indigo-50" : "border-slate-200 bg-white hover:border-slate-300"
+                )}
+              >
+                <div>
+                  <p className={cn("text-sm font-semibold", settings.storage === key ? "text-slate-800" : "text-slate-600")}>{label}</p>
+                  <p className="text-xs text-slate-500 mt-0.5">{desc}</p>
+                </div>
+                <div className={cn("w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5", settings.storage === key ? "border-indigo-600 bg-indigo-600" : "border-slate-300 bg-white")}>
+                  {settings.storage === key && <Check className="w-3 h-3 text-white" />}
+                </div>
+              </div>
+              {settings.storage === key && (
+                <ConfigField
+                  label={configLabel}
+                  placeholder={configPlaceholder}
+                  value={settings.storageConfig?.[key]}
+                  onChange={(v) => updateConfig("storageConfig", key, v)}
+                />
               )}
-            >
-              <div>
-                <p className={cn("text-sm font-semibold", settings.storage === key ? "text-slate-800" : "text-slate-600")}>{label}</p>
-                <p className="text-xs text-slate-500 mt-0.5">{desc}</p>
-              </div>
-              <div className={cn("w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5", settings.storage === key ? "border-indigo-600 bg-indigo-600" : "border-slate-300 bg-white")}>
-                {settings.storage === key && <Check className="w-3 h-3 text-white" />}
-              </div>
             </div>
           ))}
         </div>
@@ -275,26 +322,39 @@ function StepPostProcessing({ settings, onChange }) {
 
       {/* Notifications */}
       <div>
-        <p className="text-sm text-slate-500 mb-3 flex items-center gap-1.5"><Bell className="w-4 h-4" />Notification Options</p>
+        <p className="text-sm font-medium text-slate-700 mb-1 flex items-center gap-1.5"><Bell className="w-4 h-4 text-indigo-500" />Notification Options</p>
+        <p className="text-xs text-slate-400 mb-3">Multiple options can be selected.</p>
         <div className="space-y-2">
-          {notificationOptions.map(({ key, label, desc }) => (
-            <div
-              key={key}
-              onClick={() => onChange({ ...settings, notifications: settings.notifications?.includes(key) ? settings.notifications.filter(n => n !== key) : [...(settings.notifications || []), key] })}
-              className={cn(
-                "rounded-lg border-2 p-3 flex items-start justify-between gap-3 cursor-pointer transition-all",
-                settings.notifications?.includes(key) ? "border-indigo-200 bg-indigo-50" : "border-slate-200 bg-white hover:border-slate-300"
-              )}
-            >
-              <div>
-                <p className={cn("text-sm font-semibold", settings.notifications?.includes(key) ? "text-slate-800" : "text-slate-600")}>{label}</p>
-                <p className="text-xs text-slate-500 mt-0.5">{desc}</p>
+          {notificationOptions.map(({ key, label, desc, configLabel, configPlaceholder }) => {
+            const active = settings.notifications?.includes(key);
+            return (
+              <div key={key}>
+                <div
+                  onClick={() => toggleNotification(key)}
+                  className={cn(
+                    "rounded-lg border-2 p-3 flex items-start justify-between gap-3 cursor-pointer transition-all",
+                    active ? "border-indigo-200 bg-indigo-50" : "border-slate-200 bg-white hover:border-slate-300"
+                  )}
+                >
+                  <div>
+                    <p className={cn("text-sm font-semibold", active ? "text-slate-800" : "text-slate-600")}>{label}</p>
+                    <p className="text-xs text-slate-500 mt-0.5">{desc}</p>
+                  </div>
+                  <div className={cn("w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 mt-0.5", active ? "border-indigo-600 bg-indigo-600" : "border-slate-300 bg-white")}>
+                    {active && <Check className="w-3 h-3 text-white" />}
+                  </div>
+                </div>
+                {active && (
+                  <ConfigField
+                    label={configLabel}
+                    placeholder={configPlaceholder}
+                    value={settings.notificationConfig?.[key]}
+                    onChange={(v) => updateConfig("notificationConfig", key, v)}
+                  />
+                )}
               </div>
-              <div className={cn("w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5", settings.notifications?.includes(key) ? "border-indigo-600 bg-indigo-600" : "border-slate-300 bg-white")}>
-                {settings.notifications?.includes(key) && <Check className="w-3 h-3 text-white" />}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
