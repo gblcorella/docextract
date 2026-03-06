@@ -390,6 +390,7 @@ function ChatPanel() {
 }
 
 export default function Playground() {
+  const navigate = useNavigate();
   const [file, setFile] = useState(null);
   const [activeTool, setActiveTool] = useState("split");
   const [page, setPage] = useState(1);
