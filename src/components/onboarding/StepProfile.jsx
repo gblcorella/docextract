@@ -3,10 +3,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Hash, AppWindow, Mail, UserCheck, X, Plus } from "lucide-react";
+import { Hash, AppWindow, Mail, UserCheck, X, Plus, IdCard } from "lucide-react";
 
 export default function StepProfile({ data, onChange }) {
   const [approverInput, setApproverInput] = React.useState("");
+  const [fidInput, setFidInput] = React.useState("");
+  const [sidInput, setSidInput] = React.useState("");
 
   const addApprover = () => {
     const email = approverInput.trim();
