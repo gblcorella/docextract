@@ -111,6 +111,24 @@ export default function ProfileDetail({ profile, onBack, onSave }) {
 
   const removeApprover = (email) => setForm(f => ({ ...f, approvers: f.approvers.filter(e => e !== email) }));
 
+  const addFid = () => {
+    const val = fidInput.trim();
+    if (!val) return;
+    const current = form.fids || [];
+    if (!current.includes(val)) setForm(f => ({ ...f, fids: [...current, val] }));
+    setFidInput("");
+  };
+  const removeFid = (val) => setForm(f => ({ ...f, fids: (f.fids || []).filter(v => v !== val) }));
+
+  const addSid = () => {
+    const val = sidInput.trim();
+    if (!val) return;
+    const current = form.sids || [];
+    if (!current.includes(val)) setForm(f => ({ ...f, sids: [...current, val] }));
+    setSidInput("");
+  };
+  const removeSid = (val) => setForm(f => ({ ...f, sids: (f.sids || []).filter(v => v !== val) }));
+
   const handleSave = () => {
     onSave({ ...form, selectedDocConfigs: docConfigData.selectedDocConfigs, isActive });
     setEditing(false);
