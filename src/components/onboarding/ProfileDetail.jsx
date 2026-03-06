@@ -292,6 +292,60 @@ export default function ProfileDetail({ profile, onBack, onSave }) {
                   </div>
                   {editing && <p className="text-xs text-slate-400">Press Enter or click + to add.</p>}
                 </div>
+
+                {/* FIDs */}
+                <div className="space-y-2">
+                  <Label className="text-xs font-medium text-slate-500 flex items-center gap-1.5">
+                    <IdCard className="w-3.5 h-3.5" />FIDs
+                  </Label>
+                  {editing && (
+                    <div className="flex gap-2">
+                      <Input
+                        placeholder="Enter FID"
+                        value={fidInput}
+                        onChange={e => setFidInput(e.target.value)}
+                        onKeyDown={e => e.key === "Enter" && (e.preventDefault(), addFid())}
+                      />
+                      <Button type="button" variant="outline" onClick={addFid} className="flex-shrink-0"><Plus className="w-4 h-4" /></Button>
+                    </div>
+                  )}
+                  <div className="flex flex-wrap gap-2">
+                    {(form.fids || []).length > 0 ? (form.fids.map(val => (
+                      <Badge key={val} variant="secondary" className="flex items-center gap-1.5 pr-1">
+                        {val}
+                        {editing && <button onClick={() => removeFid(val)} className="hover:text-rose-600"><X className="w-3 h-3" /></button>}
+                      </Badge>
+                    ))) : <p className="text-sm text-slate-400">No FIDs</p>}
+                  </div>
+                  {editing && <p className="text-xs text-slate-400">Press Enter or click + to add.</p>}
+                </div>
+
+                {/* SIDs */}
+                <div className="space-y-2">
+                  <Label className="text-xs font-medium text-slate-500 flex items-center gap-1.5">
+                    <IdCard className="w-3.5 h-3.5" />SIDs
+                  </Label>
+                  {editing && (
+                    <div className="flex gap-2">
+                      <Input
+                        placeholder="Enter SID"
+                        value={sidInput}
+                        onChange={e => setSidInput(e.target.value)}
+                        onKeyDown={e => e.key === "Enter" && (e.preventDefault(), addSid())}
+                      />
+                      <Button type="button" variant="outline" onClick={addSid} className="flex-shrink-0"><Plus className="w-4 h-4" /></Button>
+                    </div>
+                  )}
+                  <div className="flex flex-wrap gap-2">
+                    {(form.sids || []).length > 0 ? (form.sids.map(val => (
+                      <Badge key={val} variant="secondary" className="flex items-center gap-1.5 pr-1">
+                        {val}
+                        {editing && <button onClick={() => removeSid(val)} className="hover:text-rose-600"><X className="w-3 h-3" /></button>}
+                      </Badge>
+                    ))) : <p className="text-sm text-slate-400">No SIDs</p>}
+                  </div>
+                  {editing && <p className="text-xs text-slate-400">Press Enter or click + to add.</p>}
+                </div>
               </div>
 
               {/* Document Config */}
