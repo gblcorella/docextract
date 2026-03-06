@@ -167,7 +167,7 @@ export default function Transactions() {
   };
 
   const handleClear = () => {
-    setTxnId(""); setProfileId(""); setDocConfigId("");
+    setTxnId(""); setProfileId("all"); setDocConfigId("all"); setFunctionalId("all");
     setDateFrom(""); setDateTo("");
     setFiltered([]); setHasSearched(false);
   };
