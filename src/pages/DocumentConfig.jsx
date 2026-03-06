@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
-import { ArrowLeft, FileText, Zap, EyeOff, ChevronRight, Search, Plus, Code2, LayoutList, Save, X, Sparkles, FileUp, Play, Scissors, Scan, Edit } from "lucide-react";
+import { ArrowLeft, FileText, Zap, EyeOff, ChevronRight, Search, Plus, Code2, LayoutList, Save, X, Sparkles, FileUp, Play, Scissors, Scan, Edit, Upload, PenLine, Library, ChevronDown } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { motion, AnimatePresence } from "framer-motion";
 import ConfigBar from "@/components/extraction/ConfigBar";
