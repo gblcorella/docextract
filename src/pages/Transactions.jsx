@@ -232,6 +232,13 @@ export default function Transactions() {
 
         {/* Table */}
         <div className="flex-1 overflow-y-auto">
+          {!hasSearched ? (
+            <div className="flex flex-col items-center justify-center h-full text-slate-400 gap-3 py-24">
+              <Search className="w-10 h-10 opacity-30" />
+              <p className="text-sm font-medium">Enter search criteria above and click Search</p>
+              <p className="text-xs">You can search by Transaction ID, Profile ID, Doc Config ID, or date range</p>
+            </div>
+          ) : (
           <table className="w-full text-sm">
             <thead className="sticky top-0 bg-slate-50 border-b border-slate-200 z-10">
               <tr className="text-xs text-slate-400 font-semibold uppercase tracking-wide">
