@@ -191,42 +191,42 @@ export default function Transactions() {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h1 className="text-xl font-bold text-slate-800">Transactions</h1>
-              <p className="text-sm text-slate-400 mt-0.5">{filtered.length} records found</p>
+              <p className="text-sm text-slate-400 mt-0.5">
+                {hasSearched ? `${filtered.length} records found` : "Search to load transactions"}
+              </p>
             </div>
-            <Button variant="outline" size="sm" className="text-slate-600">
-              <Download className="w-4 h-4 mr-1.5" />
-              Export CSV
-            </Button>
+            {hasSearched && (
+              <Button variant="outline" size="sm" className="text-slate-600">
+                <Download className="w-4 h-4 mr-1.5" />Export CSV
+              </Button>
+            )}
           </div>
-          {/* Filters */}
-          <div className="flex items-center gap-3">
-            <div className="relative flex-1 max-w-sm">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-              <Input
-                className="pl-9 h-9 text-sm"
-                placeholder="Search by filename or ID…"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
+          {/* Search fields */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-3">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
+              <Input className="pl-8 h-9 text-sm" placeholder="Transaction ID" value={txnId} onChange={(e) => setTxnId(e.target.value)} />
             </div>
-            <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="h-9 w-36 text-sm"><SelectValue placeholder="Status" /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Statuses</SelectItem>
-                <SelectItem value="completed">Completed</SelectItem>
-                <SelectItem value="failed">Failed</SelectItem>
-                <SelectItem value="processing">Processing</SelectItem>
-                <SelectItem value="rejected">Rejected</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select value={useCaseFilter} onValueChange={setUseCaseFilter}>
-              <SelectTrigger className="h-9 w-36 text-sm"><SelectValue placeholder="Use Case" /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Use Cases</SelectItem>
-                <SelectItem value="Extraction">Extraction</SelectItem>
-                <SelectItem value="Classification">Classification</SelectItem>
-              </SelectContent>
-            </Select>
+            <Input className="h-9 text-sm" placeholder="Profile ID" value={profileId} onChange={(e) => setProfileId(e.target.value)} />
+            <Input className="h-9 text-sm" placeholder="Doc Config ID" value={docConfigId} onChange={(e) => setDocConfigId(e.target.value)} />
+            <div className="relative">
+              <CalendarDays className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 pointer-events-none" />
+              <Input type="date" className="pl-8 h-9 text-sm" placeholder="From" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} />
+            </div>
+            <div className="relative">
+              <CalendarDays className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 pointer-events-none" />
+              <Input type="date" className="pl-8 h-9 text-sm" placeholder="To" value={dateTo} onChange={(e) => setDateTo(e.target.value)} />
+            </div>
+          </div>
+          <div className="flex gap-2">
+            <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 h-9 px-5" onClick={handleSearch}>
+              <Search className="w-3.5 h-3.5 mr-1.5" />Search
+            </Button>
+            {hasSearched && (
+              <Button size="sm" variant="outline" className="h-9 px-4 text-slate-500" onClick={handleClear}>
+                Clear
+              </Button>
+            )}
           </div>
         </div>
 
