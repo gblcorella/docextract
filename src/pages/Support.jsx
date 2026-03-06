@@ -278,6 +278,8 @@ export default function Support() {
         </div>
       </div>
 
+      {showModal && <NotifyTeamsModal onClose={() => setShowModal(false)} />}
+
       {/* Input area */}
       <div className="bg-white border-t border-slate-200 px-6 py-4">
         <div className="max-w-3xl mx-auto flex gap-3">
