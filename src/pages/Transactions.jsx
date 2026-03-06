@@ -115,11 +115,37 @@ function StatusBadge({ status }) {
 
 
 export default function Transactions() {
-  const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
-  const [useCaseFilter, setUseCaseFilter] = useState("all");
+  // Search fields
+  const [txnId, setTxnId] = useState("");
+  const [profileId, setProfileId] = useState("");
+  const [docConfigId, setDocConfigId] = useState("");
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
+
+  // Results
+  const [hasSearched, setHasSearched] = useState(false);
+  const [filtered, setFiltered] = useState([]);
+
   const [selectedTxn, setSelectedTxn] = useState(null);
   const [transactions, setTransactions] = useState(MOCK_TRANSACTIONS);
+
+  const handleSearch = () => {
+    const results = transactions.filter((t) => {
+      const matchTxn = !txnId || t.id.toLowerCase().includes(txnId.toLowerCase());
+      const matchDate =
+        (!dateFrom || t.submittedAt >= dateFrom) &&
+        (!dateTo || t.submittedAt <= dateTo + " 23:59");
+      return matchTxn && matchDate;
+    });
+    setFiltered(results);
+    setHasSearched(true);
+  };
+
+  const handleClear = () => {
+    setTxnId(""); setProfileId(""); setDocConfigId("");
+    setDateFrom(""); setDateTo("");
+    setFiltered([]); setHasSearched(false);
+  };
 
   if (selectedTxn) {
     return (
