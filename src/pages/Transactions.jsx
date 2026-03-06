@@ -9,6 +9,30 @@ import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import TransactionDetail from "@/components/transactions/TransactionDetail";
 
+const PROFILE_OPTIONS = [
+  { value: "PRF-001", label: "Blackstone" },
+  { value: "PRF-002", label: "Apollo" },
+  { value: "PRF-003", label: "KKR" },
+  { value: "PRF-004", label: "Carlyle" },
+  { value: "PRF-005", label: "Warburg" },
+  { value: "PRF-006", label: "TPG" },
+];
+
+const DOC_CONFIG_OPTIONS = [
+  { value: "DC-101", label: "Alts Schedule" },
+  { value: "DC-102", label: "Quarterly Report" },
+  { value: "DC-103", label: "Annual Report" },
+  { value: "DC-104", label: "Capital Account Statement" },
+];
+
+const FUNCTIONAL_ID_OPTIONS = [
+  { value: "FN-001", label: "Extraction" },
+  { value: "FN-002", label: "Classification" },
+  { value: "FN-003", label: "Redaction" },
+  { value: "FN-004", label: "Parse" },
+  { value: "FN-005", label: "Split" },
+];
+
 const MOCK_TRANSACTIONS = [
   {
     id: "TXN-1041", file: "Blackstone_Q1_2026.pdf", useCase: "Extraction", status: "completed",
