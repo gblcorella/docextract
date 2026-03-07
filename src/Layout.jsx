@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, ArrowLeftRight, Settings, FileSearch, UserPlus, ChevronRight, FolderOpen, FlaskConical, ChevronLeft, Menu, LifeBuoy } from "lucide-react";
+import { LayoutDashboard, ArrowLeftRight, Settings, FileSearch, UserPlus, ChevronRight, FolderOpen, FlaskConical, ChevronLeft, Menu, LifeBuoy, BarChart2 } from "lucide-react";
 
 const navItems = [
   { label: "Dashboard", page: "Dashboard", icon: LayoutDashboard },
   { label: "Transactions", page: "Transactions", icon: ArrowLeftRight },
   { label: "Document Config", page: "DocumentConfig", icon: FolderOpen },
+  { label: "Analytics", page: "Analytics", icon: BarChart2 },
   { label: "Playground", page: "Playground", icon: FlaskConical },
   { label: "Client Profile", page: "Onboarding", icon: UserPlus },
   { label: "Support", page: "Support", icon: LifeBuoy },
