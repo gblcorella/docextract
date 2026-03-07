@@ -68,41 +68,120 @@ function DocViewer({ file, page, totalPages, onPageChange }) {
 }
 
 function SplitPanel() {
+  const [showDocPicker, setShowDocPicker] = useState(false);
+  const [selectedConfig, setSelectedConfig] = useState(null);
+  const [rules, setRules] = useState([]);
+  const [newRule, setNewRule] = useState("");
+  const [running, setRunning] = useState(false);
+
+  const handleSelectConfig = (cfg) => {
+    setSelectedConfig(cfg);
+    setRules(cfg.rules.map((r, i) => ({ id: i, text: r })));
+    setShowDocPicker(false);
+  };
+
+  const addRule = () => {
+    const val = newRule.trim();
+    if (!val) return;
+    setRules((prev) => [...prev, { id: Date.now(), text: val }]);
+    setNewRule("");
+  };
+
+  const removeRule = (id) => setRules((prev) => prev.filter((r) => r.id !== id));
+
+  const handleRun = () => {
+    setRunning(true);
+    setTimeout(() => setRunning(false), 2000);
+  };
+
   return (
     <div className="flex flex-col h-full">
-      <div className="flex items-center justify-between p-4 border-b border-slate-100">
-        <span className="font-semibold text-slate-700 text-sm">Suggest Split Types</span>
-        <button className="text-slate-400 hover:text-slate-600"><X className="w-4 h-4" /></button>
+      <div className="px-5 pt-5 pb-3 border-b border-slate-100 flex-shrink-0">
+        <h2 className="text-base font-semibold text-slate-800">Split Rules</h2>
+        <p className="text-xs text-slate-400 mt-0.5">Pick from a document config or define rules manually.</p>
       </div>
-      <div className="flex-1 overflow-auto p-4 space-y-3">
-        {SPLIT_SUGGESTIONS.map((s, i) => (
-          <div key={i} className="border border-slate-200 rounded-lg p-3">
-            <div className="flex items-start gap-2 mb-1">
-              <span className={`font-semibold text-sm ${s.color}`}>{s.title}</span>
+
+      <div className="flex-1 overflow-auto p-5 space-y-4">
+        {/* Pick from Document Config */}
+        <div className="border border-slate-200 rounded-xl overflow-hidden">
+          <button
+            onClick={() => setShowDocPicker(!showDocPicker)}
+            className="w-full flex items-center justify-between px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
+          >
+            <div className="flex items-center gap-2">
+              <FolderOpen className="w-4 h-4 text-rose-500" />
+              <span className="font-medium">
+                {selectedConfig ? (
+                  <span>Using: <span className="text-rose-600">{selectedConfig.name}</span></span>
+                ) : "Pick from Document Config"}
+              </span>
             </div>
-            {s.tags && (
-              <div className="flex gap-1 mb-2">
-                {s.tags.map((t) => (
-                  <Badge key={t} variant="secondary" className="text-xs bg-orange-50 text-orange-600 border-orange-100">{t}</Badge>
-                ))}
-              </div>
-            )}
-            <p className="text-xs text-slate-500 leading-relaxed">{s.desc}</p>
-          </div>
-        ))}
-        <Button className="w-full bg-indigo-600 hover:bg-indigo-700 text-sm mt-2">Start with Suggestions</Button>
-      </div>
-      <div className="border-t border-slate-100 p-3 space-y-1">
-        {[
-          { icon: PenLine, label: "Write a Rule Prompt" },
-          { icon: FileJson, label: "Upload JSON Rules" },
-          { icon: Plus, label: "Start from Scratch" },
-        ].map(({ icon: Icon, label }) => (
-          <button key={label} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-slate-600 hover:bg-slate-50 transition-colors">
-            <Icon className="w-4 h-4 text-slate-400" />
-            {label}
+            <ChevronDown className={cn("w-4 h-4 text-slate-400 transition-transform", showDocPicker && "rotate-180")} />
           </button>
-        ))}
+          {showDocPicker && (
+            <div className="border-t border-slate-100 divide-y divide-slate-100">
+              {MOCK_SPLIT_DOC_CONFIGS.map((cfg) => (
+                <button
+                  key={cfg.id}
+                  onClick={() => handleSelectConfig(cfg)}
+                  className={cn("w-full text-left px-4 py-3 text-sm hover:bg-slate-50 transition-colors", selectedConfig?.id === cfg.id && "bg-rose-50")}
+                >
+                  <p className={cn("font-medium", selectedConfig?.id === cfg.id ? "text-rose-700" : "text-slate-700")}>{cfg.name}</p>
+                  <p className="text-xs text-slate-400 mt-0.5">{cfg.rules.length} rules</p>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Rules list */}
+        <div className="space-y-2">
+          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+            Split Rules {rules.length > 0 && `(${rules.length})`}
+          </p>
+          {rules.map((rule) => (
+            <div key={rule.id} className="flex items-center gap-2 bg-white border border-slate-200 rounded-lg px-3 py-2">
+              <Scissors className="w-3.5 h-3.5 text-rose-400 flex-shrink-0" />
+              <span className="flex-1 text-sm text-slate-700">{rule.text}</span>
+              <button onClick={() => removeRule(rule.id)} className="text-slate-300 hover:text-rose-500 transition-colors">
+                <Trash2 className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          ))}
+          {rules.length === 0 && (
+            <p className="text-xs text-slate-400 italic py-2">No rules defined yet.</p>
+          )}
+
+          {/* Add new rule */}
+          <div className="flex gap-2 pt-1">
+            <input
+              className="flex-1 border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-rose-300 placeholder:text-slate-400"
+              placeholder="Add a split rule…"
+              value={newRule}
+              onChange={(e) => setNewRule(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addRule())}
+            />
+            <Button variant="outline" size="sm" onClick={addRule} className="flex-shrink-0 h-9">
+              <Plus className="w-4 h-4" />
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="border-t border-slate-100 px-4 py-2.5 flex justify-end bg-white flex-shrink-0">
+        <Button
+          size="sm"
+          className="bg-rose-600 hover:bg-rose-700 text-xs h-7"
+          onClick={handleRun}
+          disabled={running || rules.length === 0}
+        >
+          {running ? (
+            <><RefreshCw className="w-3 h-3 mr-1 animate-spin" />Running…</>
+          ) : (
+            <><Play className="w-3 h-3 mr-1" />Run Split</>
+          )}
+        </Button>
       </div>
     </div>
   );
