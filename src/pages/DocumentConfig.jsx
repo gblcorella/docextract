@@ -398,7 +398,11 @@ export default function DocumentConfig() {
         initialData={editingDoc}
         onCancel={() => setEditingDoc(null)}
         onSave={(updatedDoc) => {
-          setDocuments((prev) => prev.map((d) => d.id === editingDoc.id ? { ...d, ...updatedDoc } : d));
+          if (!editingDoc.id) {
+            setDocuments((prev) => [...prev, { ...updatedDoc, id: Date.now() }]);
+          } else {
+            setDocuments((prev) => prev.map((d) => d.id === editingDoc.id ? { ...d, ...updatedDoc } : d));
+          }
           setEditingDoc(null);
         }}
       />
