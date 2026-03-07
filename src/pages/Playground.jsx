@@ -140,10 +140,13 @@ function SplitPanel() {
             Split Rules {rules.length > 0 && `(${rules.length})`}
           </p>
           {rules.map((rule) => (
-            <div key={rule.id} className="flex items-center gap-2 bg-white border border-slate-200 rounded-lg px-3 py-2">
-              <Scissors className="w-3.5 h-3.5 text-rose-400 flex-shrink-0" />
-              <span className="flex-1 text-sm text-slate-700">{rule.text}</span>
-              <button onClick={() => removeRule(rule.id)} className="text-slate-300 hover:text-rose-500 transition-colors">
+            <div key={rule.id} className="flex items-start gap-2 bg-white border border-slate-200 rounded-lg px-3 py-2.5">
+              <Scissors className="w-3.5 h-3.5 text-rose-400 flex-shrink-0 mt-0.5" />
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-slate-700">{rule.title}</p>
+                {rule.description && <p className="text-xs text-slate-400 mt-0.5">{rule.description}</p>}
+              </div>
+              <button onClick={() => removeRule(rule.id)} className="text-slate-300 hover:text-rose-500 transition-colors flex-shrink-0">
                 <Trash2 className="w-3.5 h-3.5" />
               </button>
             </div>
