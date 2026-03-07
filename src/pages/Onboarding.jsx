@@ -41,7 +41,7 @@ function ProfileList({ profiles, onAdd, onDelete, onSelect }) {
     <div className="p-8">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">Onboarded Profiles</h1>
+          <h1 className="text-2xl font-bold text-slate-800">Client Profiles</h1>
           <p className="text-sm text-slate-500 mt-0.5">{profiles.length} profile{profiles.length !== 1 ? "s" : ""} configured</p>
         </div>
         <Button onClick={onAdd} className="bg-indigo-600 hover:bg-indigo-700">
@@ -50,57 +50,65 @@ function ProfileList({ profiles, onAdd, onDelete, onSelect }) {
         </Button>
       </div>
 
-      <div className="space-y-3 max-w-4xl">
-        {profiles.map((p) => (
-          <motion.div
-            key={p.id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            onClick={() => onSelect(p)}
-          className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-200 transition-all cursor-pointer"
-          >
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center">
-                    <AppWindow className="w-4 h-4 text-indigo-600" />
+      <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden max-w-5xl">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-slate-100 bg-slate-50">
+              <th className="text-left px-4 py-3 font-medium text-slate-500">App Name</th>
+              <th className="text-left px-4 py-3 font-medium text-slate-500">App ID</th>
+              <th className="text-left px-4 py-3 font-medium text-slate-500">Contact Email</th>
+              <th className="text-left px-4 py-3 font-medium text-slate-500">Use Cases</th>
+              <th className="text-left px-4 py-3 font-medium text-slate-500">Approvers</th>
+              <th className="px-4 py-3"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {profiles.map((p) => (
+              <tr
+                key={p.id}
+                onClick={() => onSelect(p)}
+                className="border-b border-slate-100 last:border-0 hover:bg-slate-50 cursor-pointer transition-colors"
+              >
+                <td className="px-4 py-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-lg bg-indigo-50 flex items-center justify-center flex-shrink-0">
+                      <AppWindow className="w-3.5 h-3.5 text-indigo-600" />
+                    </div>
+                    <span className="font-medium text-slate-800">{p.appName}</span>
                   </div>
-                  <div>
-                    <p className="font-semibold text-slate-800">{p.appName}</p>
-                    <p className="text-xs text-slate-400 font-mono">{p.appId}</p>
+                </td>
+                <td className="px-4 py-3 font-mono text-xs text-slate-400">{p.appId}</td>
+                <td className="px-4 py-3 text-slate-500">{p.contactEmail}</td>
+                <td className="px-4 py-3">
+                  <div className="flex flex-wrap gap-1">
+                    {(p.useCases || []).map((uc, i) => (
+                      <span key={i} className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full border bg-slate-50 text-slate-600 border-slate-200">
+                        {uc.type === "extraction" ? <Zap className="w-3 h-3 text-indigo-400" /> : <Tag className="w-3 h-3 text-purple-400" />}
+                        {uc.name}
+                      </span>
+                    ))}
                   </div>
-                </div>
-
-                <div className="flex items-center gap-2 text-xs text-slate-500 mb-3 ml-11">
-                  <Mail className="w-3.5 h-3.5" />
-                  {p.contactEmail}
-                </div>
-
-                <div className="flex flex-wrap gap-2 ml-11">
-                  {p.useCases.map((uc, i) => (
-                    <span key={i} className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full border bg-slate-50 text-slate-600 border-slate-200">
-                      {uc.type === "extraction" ? <Zap className="w-3 h-3 text-indigo-400" /> : <Tag className="w-3 h-3 text-purple-400" />}
-                      {uc.name}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 flex-shrink-0">
-                <Badge variant="secondary" className="text-xs">{p.approvers.length} approver{p.approvers.length !== 1 ? "s" : ""}</Badge>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-slate-300 hover:text-red-500 h-8 w-8"
-                  onClick={(e) => { e.stopPropagation(); onDelete(p.id); }}
-                >
-                  <Trash2 className="w-4 h-4" />
-                </Button>
-                <ChevronRight className="w-4 h-4 text-slate-300" />
-              </div>
-            </div>
-          </motion.div>
-        ))}
+                </td>
+                <td className="px-4 py-3">
+                  <Badge variant="secondary" className="text-xs">{p.approvers.length} approver{p.approvers.length !== 1 ? "s" : ""}</Badge>
+                </td>
+                <td className="px-4 py-3">
+                  <div className="flex items-center gap-1 justify-end">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-slate-300 hover:text-red-500 h-8 w-8"
+                      onClick={(e) => { e.stopPropagation(); onDelete(p.id); }}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                    <ChevronRight className="w-4 h-4 text-slate-300" />
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
         {profiles.length === 0 && (
           <div className="text-center py-20 text-slate-400">
