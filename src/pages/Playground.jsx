@@ -13,18 +13,10 @@ const TOOLS = [
   { key: "chat", label: "Chat", icon: MessageSquare, color: "text-slate-600", activeColor: "bg-slate-100 text-slate-700 border-slate-200" },
 ];
 
-const SPLIT_SUGGESTIONS = [
-  {
-    title: "Rollover Contribution Instructions",
-    desc: "A guide providing step-by-step instructions for making rollover contributions to a 401(k) savings plan.",
-    color: "text-emerald-600",
-  },
-  {
-    title: "Incoming Rollover Election Form",
-    tags: ["Social Security Number"],
-    desc: "A form used to elect an incoming rollover, requiring personal details, rollover type, and fund allocation choices.",
-    color: "text-orange-500",
-  },
+const MOCK_SPLIT_DOC_CONFIGS = [
+  { id: 1, name: "K-1 Schedule Parser", rules: ["Schedule of Investments", "Capital Account Summary", "Tax Information"] },
+  { id: 2, name: "Fund Report Splitter", rules: ["Equity Report", "Fixed Income", "Alternative Investment", "Mixed Asset"] },
+  { id: 3, name: "Quarterly Extractor", rules: ["Executive Summary", "Financial Statements", "Risk Disclosures"] },
 ];
 
 function EmptyDocViewer({ onUpload }) {
