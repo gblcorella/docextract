@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Upload, FileText, Download, ChevronLeft, ChevronRight, Plus, Share2, Scissors, Scan, FileSearch2, MessageSquare, X, Lightbulb, FileJson, PenLine, RefreshCw, Copy, RotateCcw, Sparkles, FolderOpen, ChevronDown } from "lucide-react";
+import { Upload, FileText, Download, ChevronLeft, ChevronRight, Plus, Share2, Scissors, Scan, FileSearch2, MessageSquare, X, FileJson, RefreshCw, Copy, RotateCcw, Sparkles, FolderOpen, ChevronDown, Play, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { Button } from "@/components/ui/button";
