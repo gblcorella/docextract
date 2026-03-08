@@ -39,24 +39,13 @@ const DOCUMENTS = [
     type: "quarterly-report",
     typeLabel: "Quarterly Report",
     configs: {
-      extraction: {
-        enabled: true,
-        engine: "Template Based",
-        model: "-",
-        mode: "Fast",
-        temperature: 0,
-        fields: ["Total Assets", "Net Income", "Return %", "Benchmark"],
-      },
+      extraction: { enabled: false },
       split: {
         enabled: true,
         model: "GPT-4o",
         categories: ["Equity Report", "Fixed Income", "Alternative Investment", "Mixed Asset"],
       },
-      parse: {
-        enabled: true,
-        engine: "Gen AI - LLM",
-        outputFormat: "Markdown",
-      },
+      parse: { enabled: false },
       redaction: { enabled: false },
     },
   },
@@ -68,11 +57,7 @@ const DOCUMENTS = [
     typeLabel: "Quarterly Report",
     configs: {
       extraction: { enabled: false },
-      split: {
-        enabled: true,
-        model: "GPT-4o",
-        categories: ["Private Equity", "Real Assets", "Credit"],
-      },
+      split: { enabled: false },
       parse: { enabled: false },
       redaction: {
         enabled: true,
@@ -88,25 +73,14 @@ const DOCUMENTS = [
     type: "alts-schedule",
     typeLabel: "Alts Schedule",
     configs: {
-      extraction: {
-        enabled: true,
-        engine: "Gen AI - LLM",
-        model: "GPT-4 Turbo",
-        mode: "Accurate",
-        temperature: 0.1,
-        fields: ["Commitment", "Unfunded", "Fair Value", "Multiple"],
-      },
+      extraction: { enabled: false },
       split: { enabled: false },
       parse: {
         enabled: true,
         engine: "Template Based",
         outputFormat: "Markdown",
       },
-      redaction: {
-        enabled: true,
-        patterns: ["Account Numbers", "Tax IDs"],
-        method: "Mask",
-      },
+      redaction: { enabled: false },
     },
   },
 ];
