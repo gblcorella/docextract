@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, ArrowLeftRight, Settings, FileSearch, UserPlus, ChevronRight, FolderOpen, FlaskConical, ChevronLeft, Menu, LifeBuoy, BarChart2 } from "lucide-react";
+import { LayoutDashboard, ArrowLeftRight, Settings, FileSearch, UserPlus, ChevronRight, FolderOpen, FlaskConical, ChevronLeft, Menu, LifeBuoy, BarChart2, Beaker } from "lucide-react";
 
 const navItems = [
   { label: "Dashboard", page: "Dashboard", icon: LayoutDashboard },
