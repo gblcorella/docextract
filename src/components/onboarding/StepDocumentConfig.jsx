@@ -61,6 +61,7 @@ export default function StepDocumentConfig({ data, onChange }) {
     }
   };
 
+
   const toggleAll = () => {
     if (selected.length === docs.length) {
       onChange({ selectedDocConfigs: [] });
