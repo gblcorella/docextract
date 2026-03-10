@@ -44,6 +44,76 @@ const DOCUMENT_CONFIGS = [
 
 const CAPS = ["extraction", "split", "parse", "redaction"];
 
+function DocTable({ docs, selected, onToggle }) {
+  return (
+    <div className="rounded-xl border border-slate-200 overflow-hidden bg-white shadow-sm">
+      <table className="w-full text-sm">
+        <thead>
+          <tr className="bg-slate-50 border-b border-slate-200">
+            <th className="w-10 px-4 py-3"></th>
+            <th className="text-left px-3 py-3 font-medium text-slate-500 text-xs uppercase tracking-wide">Document</th>
+            <th className="text-left px-3 py-3 font-medium text-slate-500 text-xs uppercase tracking-wide">Type</th>
+            {CAPS.map((cap) => {
+              const { icon: Icon, color, label } = CAPABILITY_ICONS[cap];
+              return (
+                <th key={cap} className="text-center px-3 py-3 font-medium text-slate-500 text-xs uppercase tracking-wide">
+                  <span className={cn("inline-flex items-center gap-1", color)}>
+                    <Icon className="w-3.5 h-3.5" />{label}
+                  </span>
+                </th>
+              );
+            })}
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-slate-100">
+          {docs.map((doc) => {
+            const isSelected = selected.includes(doc.id);
+            return (
+              <tr
+                key={doc.id}
+                onClick={() => onToggle(doc.id)}
+                className={cn("cursor-pointer transition-colors", isSelected ? "bg-indigo-50/60" : "hover:bg-slate-50")}
+              >
+                <td className="px-4 py-3 text-center" onClick={(e) => e.stopPropagation()}>
+                  <Checkbox checked={isSelected} onCheckedChange={() => onToggle(doc.id)} />
+                </td>
+                <td className="px-3 py-3">
+                  <div className="flex items-center gap-3">
+                    <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0", isSelected ? "bg-indigo-100" : "bg-slate-100")}>
+                      <FileText className={cn("w-3.5 h-3.5", isSelected ? "text-indigo-600" : "text-slate-400")} />
+                    </div>
+                    <div>
+                      <p className={cn("font-semibold text-sm", isSelected ? "text-indigo-800" : "text-slate-800")}>{doc.name}</p>
+                      <p className="text-xs text-slate-400 font-mono">{doc.fileName}</p>
+                    </div>
+                  </div>
+                </td>
+                <td className="px-3 py-3">
+                  <Badge variant="secondary" className="text-xs">{doc.typeLabel}</Badge>
+                </td>
+                {CAPS.map((cap) => {
+                  const { icon: Icon, color, bg } = CAPABILITY_ICONS[cap];
+                  return (
+                    <td key={cap} className="px-3 py-3 text-center">
+                      {doc.configs[cap] ? (
+                        <span className={cn("inline-flex items-center justify-center w-6 h-6 rounded-full", bg)}>
+                          <Icon className={cn("w-3.5 h-3.5", color)} />
+                        </span>
+                      ) : (
+                        <span className="text-slate-200">—</span>
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 export default function StepDocumentConfig({ data, onChange }) {
   const selected = data.selectedDocConfigs || [];
 
@@ -55,100 +125,32 @@ export default function StepDocumentConfig({ data, onChange }) {
     }
   };
 
-  const toggleAll = () => {
-    if (selected.length === DOCUMENT_CONFIGS.length) {
-      onChange({ selectedDocConfigs: [] });
-    } else {
-      onChange({ selectedDocConfigs: DOCUMENT_CONFIGS.map((d) => d.id) });
-    }
-  };
-
-  const allSelected = selected.length === DOCUMENT_CONFIGS.length;
-  const someSelected = selected.length > 0 && !allSelected;
+  const selectedDocs = DOCUMENT_CONFIGS.filter((d) => selected.includes(d.id));
+  const availableDocs = DOCUMENT_CONFIGS.filter((d) => !selected.includes(d.id));
+  const isEditing = selected.length > 0;
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <div>
         <h2 className="text-lg font-bold text-slate-800">Document Configurations</h2>
         <p className="text-sm text-slate-500 mt-0.5">
-          Select the document configs this profile will use. You can pick one or more.
+          Select the document configs this profile will use.
         </p>
       </div>
 
-      <div className="rounded-xl border border-slate-200 overflow-hidden bg-white shadow-sm">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="bg-slate-50 border-b border-slate-200">
-              <th className="w-10 px-4 py-3">
-                <Checkbox
-                  checked={allSelected}
-                  ref={(el) => { if (el) el.indeterminate = someSelected; }}
-                  onCheckedChange={toggleAll}
-                />
-              </th>
-              <th className="text-left px-3 py-3 font-medium text-slate-500 text-xs uppercase tracking-wide">Document</th>
-              <th className="text-left px-3 py-3 font-medium text-slate-500 text-xs uppercase tracking-wide">Type</th>
-              {CAPS.map((cap) => {
-                const { icon: Icon, color, label } = CAPABILITY_ICONS[cap];
-                return (
-                  <th key={cap} className="text-center px-3 py-3 font-medium text-slate-500 text-xs uppercase tracking-wide">
-                    <span className={cn("inline-flex items-center gap-1", color)}>
-                      <Icon className="w-3.5 h-3.5" />{label}
-                    </span>
-                  </th>
-                );
-              })}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100">
-            {DOCUMENT_CONFIGS.map((doc) => {
-              const isSelected = selected.includes(doc.id);
-              return (
-                <tr
-                  key={doc.id}
-                  onClick={() => toggle(doc.id)}
-                  className={cn(
-                    "cursor-pointer transition-colors",
-                    isSelected ? "bg-indigo-50/60" : "hover:bg-slate-50"
-                  )}
-                >
-                  <td className="px-4 py-3 text-center" onClick={(e) => e.stopPropagation()}>
-                    <Checkbox checked={isSelected} onCheckedChange={() => toggle(doc.id)} />
-                  </td>
-                  <td className="px-3 py-3">
-                    <div className="flex items-center gap-3">
-                      <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0", isSelected ? "bg-indigo-100" : "bg-slate-100")}>
-                        <FileText className={cn("w-3.5 h-3.5", isSelected ? "text-indigo-600" : "text-slate-400")} />
-                      </div>
-                      <div>
-                        <p className={cn("font-semibold text-sm", isSelected ? "text-indigo-800" : "text-slate-800")}>{doc.name}</p>
-                        <p className="text-xs text-slate-400 font-mono">{doc.fileName}</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-3 py-3">
-                    <Badge variant="secondary" className="text-xs">{doc.typeLabel}</Badge>
-                  </td>
-                  {CAPS.map((cap) => {
-                    const { icon: Icon, color, bg } = CAPABILITY_ICONS[cap];
-                    return (
-                      <td key={cap} className="px-3 py-3 text-center">
-                        {doc.configs[cap] ? (
-                          <span className={cn("inline-flex items-center justify-center w-6 h-6 rounded-full", bg)}>
-                            <Icon className={cn("w-3.5 h-3.5", color)} />
-                          </span>
-                        ) : (
-                          <span className="text-slate-200">—</span>
-                        )}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+      {isEditing && selectedDocs.length > 0 && (
+        <div className="space-y-2">
+          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Selected ({selectedDocs.length})</p>
+          <DocTable docs={selectedDocs} selected={selected} onToggle={toggle} />
+        </div>
+      )}
+
+      {availableDocs.length > 0 && (
+        <div className="space-y-2">
+          {isEditing && <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Add More</p>}
+          <DocTable docs={availableDocs} selected={selected} onToggle={toggle} />
+        </div>
+      )}
 
       {selected.length > 0 && (
         <p className="text-xs text-indigo-600 font-medium">{selected.length} config{selected.length > 1 ? "s" : ""} selected</p>
