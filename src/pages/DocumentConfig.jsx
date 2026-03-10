@@ -326,7 +326,12 @@ export default function DocumentConfig() {
   const [search, setSearch] = useState("");
   const [addingDoc, setAddingDoc] = useState(false);
   const [editingDoc, setEditingDoc] = useState(null);
-  const [documents, setDocuments] = useState(DOCUMENTS);
+  const [documents, setDocuments] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    documentConfigsService.getAll().then((data) => { setDocuments(data); setLoading(false); });
+  }, []);
 
   const filtered = documents.filter((d) =>
     !search || d.name.toLowerCase().includes(search.toLowerCase()) || d.fileName.toLowerCase().includes(search.toLowerCase())
