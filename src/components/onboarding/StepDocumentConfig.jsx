@@ -1,6 +1,6 @@
 import React from "react";
 import { cn } from "@/lib/utils";
-import { FileText, Zap, Scissors, Scan, EyeOff, Plus } from "lucide-react";
+import { FileText, Zap, Scissors, Scan, EyeOff, Plus, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
