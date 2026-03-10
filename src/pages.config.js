@@ -56,6 +56,7 @@ import Onboarding from './pages/Onboarding';
 import Playground from './pages/Playground';
 import Support from './pages/Support';
 import Transactions from './pages/Transactions';
+import PlaygroundV2 from './pages/PlaygroundV2';
 import __Layout from './Layout.jsx';
 
 
@@ -69,6 +70,7 @@ export const PAGES = {
     "Playground": Playground,
     "Support": Support,
     "Transactions": Transactions,
+    "PlaygroundV2": PlaygroundV2,
 }
 
 export const pagesConfig = {
