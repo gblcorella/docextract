@@ -1,8 +1,9 @@
 import React from "react";
 import { cn } from "@/lib/utils";
-import { FileText, Zap, Scissors, Scan, EyeOff } from "lucide-react";
+import { FileText, Zap, Scissors, Scan, EyeOff, Plus } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/components/ui/button";
 
 const CAPABILITY_ICONS = {
   extraction: { icon: Zap, color: "text-indigo-600", bg: "bg-indigo-50", label: "Extraction" },
