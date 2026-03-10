@@ -62,10 +62,10 @@ export default function StepDocumentConfig({ data, onChange }) {
   };
 
   const toggleAll = () => {
-    if (selected.length === DOCUMENT_CONFIGS.length) {
+    if (selected.length === docs.length) {
       onChange({ selectedDocConfigs: [] });
     } else {
-      onChange({ selectedDocConfigs: DOCUMENT_CONFIGS.map((d) => d.id) });
+      onChange({ selectedDocConfigs: docs.map((d) => d.id) });
     }
   };
 
@@ -74,7 +74,7 @@ export default function StepDocumentConfig({ data, onChange }) {
       .filter(([, v]) => v)
       .map(([k]) => CAPABILITY_ICONS[k]);
 
-  const allSelected = selected.length === DOCUMENT_CONFIGS.length;
+  const allSelected = docs.length > 0 && selected.length === docs.length;
   const someSelected = selected.length > 0 && !allSelected;
 
   return (
