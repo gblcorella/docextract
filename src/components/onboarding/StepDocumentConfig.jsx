@@ -44,7 +44,14 @@ const DOCUMENT_CONFIGS = [
 ];
 
 export default function StepDocumentConfig({ data, onChange }) {
+  const [docs, setDocs] = React.useState(DOCUMENT_CONFIGS);
   const selected = data.selectedDocConfigs || [];
+
+  const deleteDoc = (id, e) => {
+    e.stopPropagation();
+    setDocs((prev) => prev.filter((d) => d.id !== id));
+    onChange({ selectedDocConfigs: selected.filter((x) => x !== id) });
+  };
 
   const toggle = (id) => {
     if (selected.includes(id)) {
