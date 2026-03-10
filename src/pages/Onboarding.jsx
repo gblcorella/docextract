@@ -191,8 +191,8 @@ export default function Onboarding() {
             <ArrowLeft className="w-3.5 h-3.5" />
             Back to profiles
           </button>
-          <h1 className="text-base font-bold text-slate-800">New Profile</h1>
-          <p className="text-xs text-slate-400 mt-0.5">Complete your setup</p>
+          <h1 className="text-base font-bold text-slate-800">{editingProfileId ? "Edit Profile" : "New Profile"}</h1>
+          <p className="text-xs text-slate-400 mt-0.5">{editingProfileId ? "Update profile settings" : "Complete your setup"}</p>
         </div>
         <nav className="flex-1 py-4 px-3">
           {steps.map((step, idx) => (
