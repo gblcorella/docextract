@@ -6,55 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-// ── Mock data ──────────────────────────────────────────────────────────────────
-
+// ── Constants ──────────────────────────────────────────────────────────────────
 const CLIENT_PROFILES = ["All Clients", "Alts Extraction App", "Fund Reports Pipeline", "Tax Doc Processor", "Insurance Claims AI"];
 const DOCUMENT_IDS = ["All Documents", "doc-001", "doc-002", "doc-003", "doc-004", "doc-005"];
 const DATE_RANGES = ["Last 7 Days", "Last 30 Days", "Last 90 Days", "Last 12 Months"];
-
-const generateDailyData = (days) =>
-  Array.from({ length: days }, (_, i) => {
-    const d = new Date();
-    d.setDate(d.getDate() - (days - 1 - i));
-    const completed = Math.floor(Math.random() * 120) + 40;
-    const failed = Math.floor(Math.random() * 20) + 2;
-    return {
-      date: d.toLocaleDateString("en-US", { month: "short", day: "numeric" }),
-      completed,
-      failed,
-      total: completed + failed,
-    };
-  });
-
-const RAW_DATA = {
-  "Last 7 Days": generateDailyData(7),
-  "Last 30 Days": generateDailyData(30),
-  "Last 90 Days": generateDailyData(90),
-  "Last 12 Months": generateDailyData(12),
-};
-
-const ENGINE_DATA = [
-  { name: "Azure DI", value: 42, color: "#6366f1" },
-  { name: "Textract", value: 28, color: "#8b5cf6" },
-  { name: "Google DV", value: 18, color: "#a78bfa" },
-  { name: "Custom", value: 12, color: "#c4b5fd" },
-];
-
-const DOC_TYPE_DATA = [
-  { type: "Schedule K-1", count: 1240, success: 96 },
-  { type: "Quarterly Report", count: 870, success: 98 },
-  { type: "Tax Form 1099", count: 620, success: 94 },
-  { type: "Insurance Claim", count: 450, success: 91 },
-  { type: "Fund Prospectus", count: 310, success: 97 },
-];
-
-const LATENCY_DATA = [
-  { label: "p50", value: 1.2 },
-  { label: "p75", value: 2.1 },
-  { label: "p90", value: 3.8 },
-  { label: "p95", value: 5.4 },
-  { label: "p99", value: 9.2 },
-];
 
 // ── Sub-components ─────────────────────────────────────────────────────────────
 
