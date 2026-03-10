@@ -48,8 +48,20 @@ export default function Analytics() {
   const [dateRange, setDateRange] = useState("Last 30 Days");
   const [clientProfile, setClientProfile] = useState("All Clients");
   const [documentId, setDocumentId] = useState("All Documents");
+  const [dailyData, setDailyData] = useState([]);
+  const [engineData, setEngineData] = useState([]);
+  const [docTypeData, setDocTypeData] = useState([]);
+  const [latencyData, setLatencyData] = useState([]);
 
-  const dailyData = useMemo(() => RAW_DATA[dateRange], [dateRange]);
+  useEffect(() => {
+    analyticsService.getEngineData().then(setEngineData);
+    analyticsService.getDocTypeData().then(setDocTypeData);
+    analyticsService.getLatencyData().then(setLatencyData);
+  }, []);
+
+  useEffect(() => {
+    analyticsService.getVolumeData(dateRange).then(setDailyData);
+  }, [dateRange]);
 
   const totals = useMemo(() => {
     const completed = dailyData.reduce((s, d) => s + d.completed, 0);
