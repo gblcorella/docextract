@@ -187,7 +187,7 @@ export default function Transactions() {
 
   const handleClear = () => {
     setTxnId(""); setProfileId("all"); setDocConfigId("all"); setFunctionalId("all");
-    setDateFrom(""); setDateTo("");
+    setDatePreset("all"); setDateFrom(""); setDateTo("");
     setFiltered([]); setHasSearched(false);
   };
 
