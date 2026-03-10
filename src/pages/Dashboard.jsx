@@ -167,17 +167,15 @@ export default function Dashboard() {
             {docConfigs.slice(0, 3).map((dc) => (
               <div key={dc.id} className="flex items-center justify-between p-3 rounded-lg border border-slate-100 hover:bg-slate-50 transition-colors">
                 <div className="flex items-center gap-3">
-                  <div className={`w-7 h-7 rounded-md flex items-center justify-center ${dc.enabled ? "bg-purple-50" : "bg-slate-100"}`}>
-                    <FolderOpen className={`w-3.5 h-3.5 ${dc.enabled ? "text-purple-500" : "text-slate-400"}`} />
+                  <div className="w-7 h-7 rounded-md flex items-center justify-center bg-purple-50">
+                    <FolderOpen className="w-3.5 h-3.5 text-purple-500" />
                   </div>
                   <div>
                     <p className="text-sm font-medium text-slate-700">{dc.name}</p>
-                    <p className="text-xs text-slate-400">{dc.type} · {dc.lastUsed}</p>
+                    <p className="text-xs text-slate-400">{dc.typeLabel}</p>
                   </div>
                 </div>
-                <Badge variant={dc.enabled ? "default" : "secondary"} className="text-xs flex-shrink-0">
-                  {dc.enabled ? "On" : "Off"}
-                </Badge>
+                <Badge variant="default" className="text-xs flex-shrink-0">Active</Badge>
               </div>
             ))}
           </CardContent>
