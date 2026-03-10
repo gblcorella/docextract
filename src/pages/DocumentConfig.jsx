@@ -341,8 +341,9 @@ export default function DocumentConfig() {
     return (
       <AddDocumentWizard
         onCancel={() => setAddingDoc(false)}
-        onSave={(newDoc) => {
-          setDocuments((prev) => [...prev, newDoc]);
+        onSave={async (newDoc) => {
+          const created = await documentConfigsService.create(newDoc);
+          setDocuments((prev) => [...prev, created]);
           setAddingDoc(false);
         }}
       />
@@ -354,10 +355,12 @@ export default function DocumentConfig() {
       <AddDocumentWizard
         initialData={editingDoc}
         onCancel={() => setEditingDoc(null)}
-        onSave={(updatedDoc) => {
+        onSave={async (updatedDoc) => {
           if (!editingDoc.id) {
-            setDocuments((prev) => [...prev, { ...updatedDoc, id: Date.now() }]);
+            const created = await documentConfigsService.create(updatedDoc);
+            setDocuments((prev) => [...prev, created]);
           } else {
+            await documentConfigsService.update(editingDoc.id, updatedDoc);
             setDocuments((prev) => prev.map((d) => d.id === editingDoc.id ? { ...d, ...updatedDoc } : d));
           }
           setEditingDoc(null);
