@@ -150,6 +150,14 @@ export default function StepDocumentConfig({ data, onChange }) {
                       ))}
                     </div>
                   </td>
+                  <td className="px-3 py-3 text-center" onClick={(e) => e.stopPropagation()}>
+                    <button
+                      onClick={(e) => deleteDoc(doc.id, e)}
+                      className="text-slate-300 hover:text-red-500 transition-colors"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </td>
                 </tr>
               );
             })}
