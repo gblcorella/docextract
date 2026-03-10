@@ -1,0 +1,112 @@
+export const ENGINE_DATA = [
+  { name: "Azure DI", value: 42, color: "#6366f1" },
+  { name: "Textract", value: 28, color: "#8b5cf6" },
+  { name: "Google DV", value: 18, color: "#a78bfa" },
+  { name: "Custom", value: 12, color: "#c4b5fd" },
+];
+
+export const DOC_TYPE_DATA = [
+  { type: "Schedule K-1", count: 1240, success: 96 },
+  { type: "Quarterly Report", count: 870, success: 98 },
+  { type: "Tax Form 1099", count: 620, success: 94 },
+  { type: "Insurance Claim", count: 450, success: 91 },
+  { type: "Fund Prospectus", count: 310, success: 97 },
+];
+
+export const LATENCY_DATA = [
+  { label: "p50", value: 1.2 },
+  { label: "p75", value: 2.1 },
+  { label: "p90", value: 3.8 },
+  { label: "p95", value: 5.4 },
+  { label: "p99", value: 9.2 },
+];
+
+export const VOLUME_DATA = {
+  "Last 7 Days": [
+    { date: "Mar 4", completed: 89, failed: 4, total: 93 },
+    { date: "Mar 5", completed: 76, failed: 6, total: 82 },
+    { date: "Mar 6", completed: 102, failed: 3, total: 105 },
+    { date: "Mar 7", completed: 58, failed: 8, total: 66 },
+    { date: "Mar 8", completed: 91, failed: 2, total: 93 },
+    { date: "Mar 9", completed: 67, failed: 5, total: 72 },
+    { date: "Mar 10", completed: 44, failed: 1, total: 45 },
+  ],
+  "Last 30 Days": [
+    { date: "Feb 9",  completed: 73, failed: 5, total: 78 },
+    { date: "Feb 10", completed: 88, failed: 3, total: 91 },
+    { date: "Feb 11", completed: 60, failed: 7, total: 67 },
+    { date: "Feb 12", completed: 95, failed: 2, total: 97 },
+    { date: "Feb 13", completed: 82, failed: 4, total: 86 },
+    { date: "Feb 14", completed: 54, failed: 6, total: 60 },
+    { date: "Feb 15", completed: 110, failed: 1, total: 111 },
+    { date: "Feb 16", completed: 78, failed: 8, total: 86 },
+    { date: "Feb 17", completed: 66, failed: 3, total: 69 },
+    { date: "Feb 18", completed: 91, failed: 5, total: 96 },
+    { date: "Feb 19", completed: 85, failed: 2, total: 87 },
+    { date: "Feb 20", completed: 72, failed: 9, total: 81 },
+    { date: "Feb 21", completed: 49, failed: 4, total: 53 },
+    { date: "Feb 22", completed: 103, failed: 3, total: 106 },
+    { date: "Feb 23", completed: 88, failed: 6, total: 94 },
+    { date: "Feb 24", completed: 77, failed: 2, total: 79 },
+    { date: "Feb 25", completed: 61, failed: 7, total: 68 },
+    { date: "Feb 26", completed: 94, failed: 1, total: 95 },
+    { date: "Feb 27", completed: 80, failed: 5, total: 85 },
+    { date: "Feb 28", completed: 56, failed: 4, total: 60 },
+    { date: "Mar 1",  completed: 99, failed: 3, total: 102 },
+    { date: "Mar 2",  completed: 74, failed: 6, total: 80 },
+    { date: "Mar 3",  completed: 87, failed: 2, total: 89 },
+    { date: "Mar 4",  completed: 89, failed: 4, total: 93 },
+    { date: "Mar 5",  completed: 76, failed: 6, total: 82 },
+    { date: "Mar 6",  completed: 102, failed: 3, total: 105 },
+    { date: "Mar 7",  completed: 58, failed: 8, total: 66 },
+    { date: "Mar 8",  completed: 91, failed: 2, total: 93 },
+    { date: "Mar 9",  completed: 67, failed: 5, total: 72 },
+    { date: "Mar 10", completed: 44, failed: 1, total: 45 },
+  ],
+  "Last 90 Days": [
+    { date: "Dec 11", completed: 65, failed: 5, total: 70 },
+    { date: "Dec 18", completed: 80, failed: 3, total: 83 },
+    { date: "Dec 25", completed: 55, failed: 7, total: 62 },
+    { date: "Jan 1",  completed: 40, failed: 2, total: 42 },
+    { date: "Jan 8",  completed: 90, failed: 4, total: 94 },
+    { date: "Jan 15", completed: 75, failed: 6, total: 81 },
+    { date: "Jan 22", completed: 100, failed: 3, total: 103 },
+    { date: "Jan 29", completed: 85, failed: 5, total: 90 },
+    { date: "Feb 5",  completed: 70, failed: 2, total: 72 },
+    { date: "Feb 12", completed: 95, failed: 4, total: 99 },
+    { date: "Feb 19", completed: 85, failed: 3, total: 88 },
+    { date: "Feb 26", completed: 94, failed: 2, total: 96 },
+    { date: "Mar 4",  completed: 89, failed: 4, total: 93 },
+  ],
+  "Last 12 Months": [
+    { date: "Mar 2025",  completed: 1200, failed: 80, total: 1280 },
+    { date: "Apr 2025",  completed: 1350, failed: 65, total: 1415 },
+    { date: "May 2025",  completed: 1480, failed: 90, total: 1570 },
+    { date: "Jun 2025",  completed: 1320, failed: 70, total: 1390 },
+    { date: "Jul 2025",  completed: 1550, failed: 55, total: 1605 },
+    { date: "Aug 2025",  completed: 1400, failed: 85, total: 1485 },
+    { date: "Sep 2025",  completed: 1600, failed: 60, total: 1660 },
+    { date: "Oct 2025",  completed: 1750, failed: 75, total: 1825 },
+    { date: "Nov 2025",  completed: 1900, failed: 50, total: 1950 },
+    { date: "Dec 2025",  completed: 1650, failed: 95, total: 1745 },
+    { date: "Jan 2026",  completed: 2100, failed: 40, total: 2140 },
+    { date: "Feb 2026",  completed: 2250, failed: 70, total: 2320 },
+  ],
+};
+
+export const DASHBOARD_VOLUME = [
+  { day: "Mon", completed: 42, failed: 3 },
+  { day: "Tue", completed: 58, failed: 5 },
+  { day: "Wed", completed: 73, failed: 2 },
+  { day: "Thu", completed: 61, failed: 8 },
+  { day: "Fri", completed: 89, failed: 4 },
+  { day: "Sat", completed: 34, failed: 1 },
+  { day: "Sun", completed: 27, failed: 2 },
+];
+
+export const RECENT_TRANSACTIONS = [
+  { id: "TXN-1041", file: "Blackstone_Q1_2026.pdf", profile: "Alts Extraction App", status: "completed", time: "2 min ago" },
+  { id: "TXN-1040", file: "Apollo_Fund_Report.pdf", profile: "Fund Reports Pipeline", status: "failed", time: "8 min ago" },
+  { id: "TXN-1039", file: "KKR_Quarterly_Dec.pdf", profile: "Alts Extraction App", status: "completed", time: "15 min ago" },
+  { id: "TXN-1038", file: "Carlyle_Alts_Q4.pdf", profile: "Fund Reports Pipeline", status: "processing", time: "21 min ago" },
+];

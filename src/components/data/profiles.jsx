@@ -1,0 +1,31 @@
+export const PROFILES_DATA = [
+  {
+    id: 1,
+    appId: "app-001",
+    appName: "Alts Extraction App",
+    contactEmail: "ops@alts.com",
+    approvers: ["john.doe@firm.com", "jane.smith@firm.com"],
+    fids: ["FID-001", "FID-002"],
+    sids: ["SID-A"],
+    useCases: [
+      { type: "extraction", name: "Schedule K-1 Extraction" },
+      { type: "classification", name: "Doc Classifier" },
+    ],
+    documentType: "alts-schedule",
+    selectedDocConfigs: [],
+    isActive: true,
+  },
+  {
+    id: 2,
+    appId: "app-002",
+    appName: "Fund Reports Pipeline",
+    contactEmail: "reports@fundco.com",
+    approvers: ["manager@fundco.com"],
+    fids: ["FID-003"],
+    sids: [],
+    useCases: [{ type: "extraction", name: "Quarterly Report Extraction" }],
+    documentType: "quarterly-report",
+    selectedDocConfigs: [],
+    isActive: true,
+  },
+];
