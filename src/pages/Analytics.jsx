@@ -197,8 +197,8 @@ export default function Analytics() {
             </tr>
           </thead>
           <tbody>
-            {DOC_TYPE_DATA.map((row) => {
-              const maxCount = Math.max(...DOC_TYPE_DATA.map(r => r.count));
+            {docTypeData.map((row) => {
+              const maxCount = Math.max(...docTypeData.map(r => r.count));
               return (
                 <tr key={row.type} className="border-b border-slate-50 last:border-0 hover:bg-slate-50 transition-colors">
                   <td className="py-3 px-3 font-medium text-slate-700">{row.type}</td>
