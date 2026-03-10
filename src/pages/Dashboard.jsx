@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { profilesService, documentConfigsService, analyticsService } from "@/components/services/dataService";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";

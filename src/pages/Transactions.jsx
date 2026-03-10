@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -8,6 +8,7 @@ import { Search, RefreshCw, XCircle, CheckCircle2, Clock, FileText, RotateCcw, T
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import TransactionDetail from "@/components/transactions/TransactionDetail";
+import { transactionsService } from "@/components/services/dataService";
 
 const PROFILE_OPTIONS = [
   { value: "PRF-001", label: "Blackstone" },
