@@ -122,9 +122,9 @@ function ProfileList({ profiles, onAdd, onDelete, onSelect }) {
 }
 
 export default function Onboarding() {
-  const [view, setView] = useState("list"); // "list" | "wizard" | "detail"
+  const [view, setView] = useState("list"); // "list" | "wizard"
   const [profiles, setProfiles] = useState(MOCK_PROFILES);
-  const [selectedProfile, setSelectedProfile] = useState(null);
+  const [editingProfileId, setEditingProfileId] = useState(null);
   const [currentStep, setCurrentStep] = useState(0);
   const [profile, setProfile] = useState({});
   const [docConfigData, setDocConfigData] = useState({ selectedDocConfigs: [] });
@@ -135,45 +135,48 @@ export default function Onboarding() {
     setCurrentStep(0);
     setProfile({});
     setDocConfigData({ selectedDocConfigs: [] });
+    setEditingProfileId(null);
+    setView("wizard");
+  };
+
+  const handleSelectProfile = (p) => {
+    setCurrentStep(0);
+    setProfile({
+      appId: p.appId,
+      appName: p.appName,
+      contactEmail: p.contactEmail,
+      approvers: p.approvers || [],
+      fids: p.fids || [],
+      sids: p.sids || [],
+    });
+    setDocConfigData({ selectedDocConfigs: p.selectedDocConfigs || [] });
+    setEditingProfileId(p.id);
     setView("wizard");
   };
 
   const handleFinish = () => {
-    const newProfile = {
-      id: Date.now(),
-      appId: profile.appId || "app-new",
-      appName: profile.appName || "New App",
-      contactEmail: profile.contactEmail || "",
-      approvers: profile.approvers || [],
-      selectedDocConfigs: docConfigData.selectedDocConfigs || [],
-    };
-    setProfiles((prev) => [...prev, newProfile]);
+    if (editingProfileId) {
+      setProfiles((prev) => prev.map((p) =>
+        p.id === editingProfileId
+          ? { ...p, ...profile, selectedDocConfigs: docConfigData.selectedDocConfigs || [] }
+          : p
+      ));
+    } else {
+      setProfiles((prev) => [...prev, {
+        id: Date.now(),
+        appId: profile.appId || "app-new",
+        appName: profile.appName || "New App",
+        contactEmail: profile.contactEmail || "",
+        approvers: profile.approvers || [],
+        selectedDocConfigs: docConfigData.selectedDocConfigs || [],
+      }]);
+    }
     setView("list");
   };
 
   const handleDelete = (id) => {
     setProfiles((prev) => prev.filter((p) => p.id !== id));
   };
-
-  const handleSelectProfile = (p) => {
-    setSelectedProfile(p);
-    setView("detail");
-  };
-
-  const handleSaveProfile = (updated) => {
-    setProfiles(prev => prev.map(p => p.id === updated.id ? updated : p));
-    setSelectedProfile(updated);
-  };
-
-  if (view === "detail" && selectedProfile) {
-    return (
-      <ProfileDetail
-        profile={selectedProfile}
-        onBack={() => setView("list")}
-        onSave={handleSaveProfile}
-      />
-    );
-  }
 
   if (view === "list") {
     return <ProfileList profiles={profiles} onAdd={handleAddNew} onDelete={handleDelete} onSelect={handleSelectProfile} />;
