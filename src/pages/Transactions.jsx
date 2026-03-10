@@ -172,7 +172,12 @@ export default function Transactions() {
   const [filtered, setFiltered] = useState([]);
 
   const [selectedTxn, setSelectedTxn] = useState(null);
-  const [transactions, setTransactions] = useState(MOCK_TRANSACTIONS);
+  const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    transactionsService.getAll().then((data) => { setTransactions(data); setLoading(false); });
+  }, []);
 
   const handleSearch = () => {
     const results = transactions.filter((t) => {
