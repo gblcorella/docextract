@@ -223,8 +223,8 @@ function ConfigField({ label, placeholder, value, onChange }) {
 function StepPostProcessing({ settings, onChange }) {
   const formats = [
     { key: "json", label: "JSON", desc: "Structured JSON format for API integration.", configLabel: "JSON Schema URL (optional)", configPlaceholder: "https://example.com/schema.json" },
-    { key: "csv", label: "CSV", desc: "Comma-separated values for spreadsheets.", configLabel: "Delimiter character", configPlaceholder: "e.g. , or ;" },
-    { key: "xml", label: "XML", desc: "XML format for enterprise systems.", configLabel: "Root element name", configPlaceholder: "e.g. documents" },
+    { key: "markdown", label: "Markdown", desc: "Human-readable Markdown for documentation and downstream LLM use.", configLabel: "Heading Level Prefix (optional)", configPlaceholder: "e.g. ## for H2" },
+    { key: "html", label: "HTML", desc: "HTML output for web rendering or email delivery.", configLabel: "CSS Class Prefix (optional)", configPlaceholder: "e.g. doc-extract" },
   ];
 
   const storageOptions = [
