@@ -3,13 +3,20 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AppWindow, Mail, X, IdCard } from "lucide-react";
 
-function EmailTagInput({ values, onChange, placeholder }) {
-  const [input, setInput] = React.useState("");
-  const [error, setError] = React.useState("");
+interface EmailTagInputProps {
+  values: string[];
+  onChange: (emails: string[]) => void;
+  placeholder?: string;
+}
 
-  const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+function EmailTagInput({ values, onChange, placeholder }: EmailTagInputProps) {
+  const [input, setInput] = React.useState<string>("");
+  const [error, setError] = React.useState<string>("");
 
-  const add = () => {
+  const isValidEmail = (email: string): boolean =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  const add = (): void => {
     const email = input.trim();
     if (!email) return;
     if (!isValidEmail(email)) { setError("Invalid email address"); return; }
@@ -19,7 +26,8 @@ function EmailTagInput({ values, onChange, placeholder }) {
     setError("");
   };
 
-  const remove = (email) => onChange(values.filter((e) => e !== email));
+  const remove = (email: string): void =>
+    onChange(values.filter((e) => e !== email));
 
   return (
     <div className="rounded-lg border border-input bg-white p-2 min-h-[44px] flex flex-wrap gap-1.5 items-center focus-within:ring-1 focus-within:ring-ring">
@@ -34,8 +42,10 @@ function EmailTagInput({ values, onChange, placeholder }) {
       <input
         type="email"
         value={input}
-        onChange={(e) => { setInput(e.target.value); setError(""); }}
-        onKeyDown={(e) => { if (e.key === "Enter" || e.key === ",") { e.preventDefault(); add(); } }}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setInput(e.target.value); setError(""); }}
+        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+          if (e.key === "Enter" || e.key === ",") { e.preventDefault(); add(); }
+        }}
         onBlur={add}
         placeholder={values.length === 0 ? placeholder : ""}
         className="flex-1 min-w-[180px] text-sm outline-none bg-transparent placeholder:text-slate-400"
@@ -45,8 +55,22 @@ function EmailTagInput({ values, onChange, placeholder }) {
   );
 }
 
-export default function StepProfile({ data, onChange }) {
+interface ProfileData {
+  appName?: string;
+  sealIdType?: string;
+  idValue?: string;
+  sealId?: string;
+  contactEmails?: string[];
+  ccIntake?: string[];
+  [key: string]: unknown;
+}
 
+interface StepProfileProps {
+  data: ProfileData;
+  onChange: (data: ProfileData) => void;
+}
+
+export default function StepProfile({ data, onChange }: StepProfileProps) {
   return (
     <div className="space-y-5">
       <div>
@@ -124,8 +148,6 @@ export default function StepProfile({ data, onChange }) {
           placeholder="Type email and press Enter..."
         />
       </div>
-
-
     </div>
   );
 }
