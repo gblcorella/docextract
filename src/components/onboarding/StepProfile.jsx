@@ -1,8 +1,6 @@
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { AppWindow, Mail, X, IdCard } from "lucide-react";
 
 function EmailTagInput({ values, onChange, placeholder }) {
