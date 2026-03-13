@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Hash, AppWindow, Mail, UserCheck, X, Plus, IdCard } from "lucide-react";
+import { AppWindow, Mail, UserCheck, X, Plus, IdCard } from "lucide-react";
 
 export default function StepProfile({ data, onChange }) {
   const [approverInput, setApproverInput] = React.useState("");
