@@ -51,28 +51,21 @@ export default function StepProfile({ data, onChange }) {
           <Label className="text-xs font-medium text-slate-600 flex items-center gap-1.5">
             <IdCard className="w-3.5 h-3.5" /> Type of ID
           </Label>
-          <div className="flex gap-2">
-            {["FID", "SID"].map((type) => (
-              <button
-                key={type}
-                type="button"
-                onClick={() => onChange({ ...data, sealIdType: type })}
-                className={`flex-1 py-2 rounded-lg border-2 text-sm font-semibold transition-all ${
-                  data.sealIdType === type
-                    ? "border-indigo-600 bg-indigo-50 text-indigo-700"
-                    : "border-slate-200 bg-white text-slate-500 hover:border-slate-300"
-                }`}
-              >
-                {type}
-              </button>
-            ))}
-          </div>
+          <select
+            value={data.sealIdType || ""}
+            onChange={(e) => onChange({ ...data, sealIdType: e.target.value })}
+            className="w-full h-9 rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
+          >
+            <option value="">Select type...</option>
+            <option value="FID">FID</option>
+            <option value="SID">SID</option>
+          </select>
         </div>
       </div>
 
       <div className="space-y-1.5">
         <Label className="text-xs font-medium text-slate-600 flex items-center gap-1.5">
-          <IdCard className="w-3.5 h-3.5" /> Seal ID
+          <IdCard className="w-3.5 h-3.5" /> Seal ID Value
         </Label>
         <Input
           placeholder={`Enter ${data.sealIdType || "FID/SID"} value`}
@@ -81,47 +74,66 @@ export default function StepProfile({ data, onChange }) {
         />
       </div>
 
-      <div className="space-y-1.5">
-        <Label className="text-xs font-medium text-slate-600 flex items-center gap-1.5">
-          <Mail className="w-3.5 h-3.5" /> Contact Email
-        </Label>
-        <Input
-          type="email"
-          placeholder="contact@yourcompany.com"
-          value={data.contactEmail || ""}
-          onChange={(e) => onChange({ ...data, contactEmail: e.target.value })}
-        />
-      </div>
-
       <div className="space-y-2">
         <Label className="text-xs font-medium text-slate-600 flex items-center gap-1.5">
-          <UserCheck className="w-3.5 h-3.5" /> Approvers Email IDs
+          <Mail className="w-3.5 h-3.5" /> Contact Emails
         </Label>
         <div className="flex gap-2">
           <Input
             type="email"
-            placeholder="approver@yourcompany.com"
-            value={approverInput}
-            onChange={(e) => setApproverInput(e.target.value)}
-            onKeyDown={handleKeyDown}
+            placeholder="contact@yourcompany.com"
+            value={contactEmailInput}
+            onChange={(e) => setContactEmailInput(e.target.value)}
+            onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addContactEmail(); } }}
           />
-          <Button type="button" variant="outline" onClick={addApprover} className="flex-shrink-0">
+          <Button type="button" variant="outline" onClick={addContactEmail} className="flex-shrink-0">
             <Plus className="w-4 h-4" />
           </Button>
         </div>
-        {(data.approvers || []).length > 0 && (
+        {(data.contactEmails || []).length > 0 && (
           <div className="flex flex-wrap gap-2 mt-2">
-            {data.approvers.map((email) => (
+            {data.contactEmails.map((email) => (
               <Badge key={email} variant="secondary" className="flex items-center gap-1.5 pr-1">
                 {email}
-                <button onClick={() => removeApprover(email)} className="hover:text-rose-600">
+                <button onClick={() => removeContactEmail(email)} className="hover:text-rose-600">
                   <X className="w-3 h-3" />
                 </button>
               </Badge>
             ))}
           </div>
         )}
-        <p className="text-xs text-slate-400">Press Enter or click + to add each approver email.</p>
+        <p className="text-xs text-slate-400">Press Enter or click + to add each email.</p>
+      </div>
+
+      <div className="space-y-2">
+        <Label className="text-xs font-medium text-slate-600 flex items-center gap-1.5">
+          <Mail className="w-3.5 h-3.5" /> CC Intake
+        </Label>
+        <div className="flex gap-2">
+          <Input
+            type="email"
+            placeholder="cc@yourcompany.com"
+            value={ccIntakeInput}
+            onChange={(e) => setCcIntakeInput(e.target.value)}
+            onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addCcIntake(); } }}
+          />
+          <Button type="button" variant="outline" onClick={addCcIntake} className="flex-shrink-0">
+            <Plus className="w-4 h-4" />
+          </Button>
+        </div>
+        {(data.ccIntake || []).length > 0 && (
+          <div className="flex flex-wrap gap-2 mt-2">
+            {data.ccIntake.map((email) => (
+              <Badge key={email} variant="secondary" className="flex items-center gap-1.5 pr-1">
+                {email}
+                <button onClick={() => removeCcIntake(email)} className="hover:text-rose-600">
+                  <X className="w-3 h-3" />
+                </button>
+              </Badge>
+            ))}
+          </div>
+        )}
+        <p className="text-xs text-slate-400">Press Enter or click + to add each CC email.</p>
       </div>
 
 
