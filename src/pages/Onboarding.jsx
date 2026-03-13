@@ -240,7 +240,8 @@ export default function Onboarding() {
             >
               {currentStep === 0 && <StepProfile data={profile} onChange={setProfile} />}
               {currentStep === 1 && <StepDocumentConfig data={docConfigData} onChange={setDocConfigData} />}
-              {currentStep === 2 && <StepReview profile={profile} useCasesData={docConfigData} />}
+              {currentStep === 2 && <StepRoles data={profile} onChange={setProfile} />}
+              {currentStep === 3 && <StepReview profile={profile} useCasesData={docConfigData} />}
             </motion.div>
           </AnimatePresence>
         </div>
