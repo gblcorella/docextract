@@ -39,12 +39,12 @@ export default function StepProfile({ data, onChange }) {
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-1.5">
           <Label className="text-xs font-medium text-slate-600 flex items-center gap-1.5">
-            <Hash className="w-3.5 h-3.5" /> App ID
+            <AppWindow className="w-3.5 h-3.5" /> App Name
           </Label>
           <Input
-            placeholder="e.g. app-001"
-            value={data.appId || ""}
-            onChange={(e) => onChange({ ...data, appId: e.target.value })}
+            placeholder="e.g. Alts Extraction App"
+            value={data.appName || ""}
+            onChange={(e) => onChange({ ...data, appName: e.target.value })}
           />
         </div>
         <div className="space-y-1.5">
