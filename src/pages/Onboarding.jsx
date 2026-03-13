@@ -194,8 +194,13 @@ export default function Onboarding() {
     setProfiles((prev) => prev.filter((p) => p.id !== id));
   };
 
+  const handleToggleActive = async (id, currentlyActive) => {
+    await profilesService.update(id, { active: !currentlyActive });
+    setProfiles((prev) => prev.map((p) => p.id === id ? { ...p, active: !currentlyActive } : p));
+  };
+
   if (view === "list") {
-    return <ProfileList profiles={profiles} onAdd={handleAddNew} onDelete={handleDelete} onSelect={handleSelectProfile} />;
+    return <ProfileList profiles={profiles} onAdd={handleAddNew} onDelete={handleDelete} onSelect={handleSelectProfile} onToggleActive={handleToggleActive} />;
   }
 
   return (
