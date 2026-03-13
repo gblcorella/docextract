@@ -7,12 +7,14 @@ import { Check, ChevronRight, ChevronLeft, Plus, AppWindow, Mail, Zap, Tag, Tras
 import { motion, AnimatePresence } from "framer-motion";
 import StepProfile from "@/components/onboarding/StepProfile";
 import StepDocumentConfig from "@/components/onboarding/StepDocumentConfig";
+import StepRoles from "@/components/onboarding/StepRoles";
 import StepReview from "@/components/onboarding/StepReview";
 
 const steps = [
   { id: 0, label: "Profile" },
   { id: 1, label: "Document Config" },
-  { id: 2, label: "Review" },
+  { id: 2, label: "Roles" },
+  { id: 3, label: "Review" },
 ];
 
 const MOCK_PROFILES = [
