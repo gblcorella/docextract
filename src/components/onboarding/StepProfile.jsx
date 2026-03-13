@@ -5,12 +5,18 @@ import { AppWindow, Mail, X, IdCard } from "lucide-react";
 
 function EmailTagInput({ values, onChange, placeholder }) {
   const [input, setInput] = React.useState("");
+  const [error, setError] = React.useState("");
+
+  const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const add = () => {
     const email = input.trim();
-    if (!email || values.includes(email)) return;
+    if (!email) return;
+    if (!isValidEmail(email)) { setError("Invalid email address"); return; }
+    if (values.includes(email)) { setError("Email already added"); return; }
     onChange([...values, email]);
     setInput("");
+    setError("");
   };
 
   const remove = (email) => onChange(values.filter((e) => e !== email));
