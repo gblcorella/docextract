@@ -89,66 +89,26 @@ export default function StepProfile({ data, onChange }) {
         />
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-1.5">
         <Label className="text-xs font-medium text-slate-600 flex items-center gap-1.5">
           <Mail className="w-3.5 h-3.5" /> Contact Emails
         </Label>
-        <div className="flex gap-2">
-          <Input
-            type="email"
-            placeholder="contact@yourcompany.com"
-            value={contactEmailInput}
-            onChange={(e) => setContactEmailInput(e.target.value)}
-            onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addContactEmail(); } }}
-          />
-          <Button type="button" variant="outline" onClick={addContactEmail} className="flex-shrink-0">
-            <Plus className="w-4 h-4" />
-          </Button>
-        </div>
-        {(data.contactEmails || []).length > 0 && (
-          <div className="flex flex-wrap gap-2 mt-2">
-            {data.contactEmails.map((email) => (
-              <Badge key={email} variant="secondary" className="flex items-center gap-1.5 pr-1">
-                {email}
-                <button onClick={() => removeContactEmail(email)} className="hover:text-rose-600">
-                  <X className="w-3 h-3" />
-                </button>
-              </Badge>
-            ))}
-          </div>
-        )}
-        <p className="text-xs text-slate-400">Press Enter or click + to add each email.</p>
+        <EmailTagInput
+          values={data.contactEmails || []}
+          onChange={(emails) => onChange({ ...data, contactEmails: emails })}
+          placeholder="Type email and press Enter..."
+        />
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-1.5">
         <Label className="text-xs font-medium text-slate-600 flex items-center gap-1.5">
           <Mail className="w-3.5 h-3.5" /> CC Intake
         </Label>
-        <div className="flex gap-2">
-          <Input
-            type="email"
-            placeholder="cc@yourcompany.com"
-            value={ccIntakeInput}
-            onChange={(e) => setCcIntakeInput(e.target.value)}
-            onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addCcIntake(); } }}
-          />
-          <Button type="button" variant="outline" onClick={addCcIntake} className="flex-shrink-0">
-            <Plus className="w-4 h-4" />
-          </Button>
-        </div>
-        {(data.ccIntake || []).length > 0 && (
-          <div className="flex flex-wrap gap-2 mt-2">
-            {data.ccIntake.map((email) => (
-              <Badge key={email} variant="secondary" className="flex items-center gap-1.5 pr-1">
-                {email}
-                <button onClick={() => removeCcIntake(email)} className="hover:text-rose-600">
-                  <X className="w-3 h-3" />
-                </button>
-              </Badge>
-            ))}
-          </div>
-        )}
-        <p className="text-xs text-slate-400">Press Enter or click + to add each CC email.</p>
+        <EmailTagInput
+          values={data.ccIntake || []}
+          onChange={(emails) => onChange({ ...data, ccIntake: emails })}
+          placeholder="Type email and press Enter..."
+        />
       </div>
 
 
