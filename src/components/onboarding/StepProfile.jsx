@@ -3,35 +3,44 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { AppWindow, Mail, X, Plus, IdCard } from "lucide-react";
+import { AppWindow, Mail, X, IdCard } from "lucide-react";
+
+function EmailTagInput({ values, onChange, placeholder }) {
+  const [input, setInput] = React.useState("");
+
+  const add = () => {
+    const email = input.trim();
+    if (!email || values.includes(email)) return;
+    onChange([...values, email]);
+    setInput("");
+  };
+
+  const remove = (email) => onChange(values.filter((e) => e !== email));
+
+  return (
+    <div className="rounded-lg border border-input bg-white p-2 min-h-[44px] flex flex-wrap gap-1.5 items-center focus-within:ring-1 focus-within:ring-ring">
+      {values.map((email) => (
+        <span key={email} className="inline-flex items-center gap-1 bg-indigo-50 text-indigo-700 text-xs font-medium px-2 py-1 rounded-full">
+          {email}
+          <button type="button" onClick={() => remove(email)} className="hover:text-rose-500 transition-colors ml-0.5">
+            <X className="w-3 h-3" />
+          </button>
+        </span>
+      ))}
+      <input
+        type="email"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        onKeyDown={(e) => { if (e.key === "Enter" || e.key === ",") { e.preventDefault(); add(); } }}
+        onBlur={add}
+        placeholder={values.length === 0 ? placeholder : ""}
+        className="flex-1 min-w-[180px] text-sm outline-none bg-transparent placeholder:text-slate-400"
+      />
+    </div>
+  );
+}
 
 export default function StepProfile({ data, onChange }) {
-  const [contactEmailInput, setContactEmailInput] = React.useState("");
-  const [ccIntakeInput, setCcIntakeInput] = React.useState("");
-
-  const addContactEmail = () => {
-    const email = contactEmailInput.trim();
-    if (!email) return;
-    const current = data.contactEmails || [];
-    if (!current.includes(email)) onChange({ ...data, contactEmails: [...current, email] });
-    setContactEmailInput("");
-  };
-
-  const removeContactEmail = (email) => {
-    onChange({ ...data, contactEmails: (data.contactEmails || []).filter((e) => e !== email) });
-  };
-
-  const addCcIntake = () => {
-    const email = ccIntakeInput.trim();
-    if (!email) return;
-    const current = data.ccIntake || [];
-    if (!current.includes(email)) onChange({ ...data, ccIntake: [...current, email] });
-    setCcIntakeInput("");
-  };
-
-  const removeCcIntake = (email) => {
-    onChange({ ...data, ccIntake: (data.ccIntake || []).filter((e) => e !== email) });
-  };
 
   return (
     <div className="space-y-5">
