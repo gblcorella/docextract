@@ -12,6 +12,7 @@ const TOOLS = [
   { key: "split", label: "Split", icon: Scissors, color: "text-rose-500", activeColor: "bg-rose-50 text-rose-700 border-rose-200", preview: true },
   { key: "extract", label: "Extract", icon: FileSearch2, color: "text-slate-600", activeColor: "bg-slate-100 text-slate-700 border-slate-200" },
   { key: "chat", label: "Chat", icon: MessageSquare, color: "text-slate-600", activeColor: "bg-slate-100 text-slate-700 border-slate-200" },
+  { key: "compare", label: "Compare", icon: ArrowLeftRight, color: "text-indigo-600", activeColor: "bg-indigo-50 text-indigo-700 border-indigo-200" },
 ];
 
 const MOCK_SPLIT_DOC_CONFIGS = [
@@ -643,6 +644,7 @@ export default function Playground() {
                 ) : (
                   <Icon className={cn("w-4 h-4", tool.color)} />
                 )}
+                
                 {tool.label}
                 {tool.preview && <Badge className="bg-teal-500 text-white text-[10px] px-1.5 py-0 rounded-full border-0 ml-0.5">Preview</Badge>}
               </button>
@@ -681,6 +683,7 @@ export default function Playground() {
           {activeTool === "parse" && <ParsePanel />}
           {activeTool === "extract" && <ExtractPanel onRunExtract={() => navigate(createPageUrl("ExtractionResult"))} />}
           {activeTool === "chat" && <ChatPanel />}
+          {activeTool === "compare" && <ComparePanel defaultTool="parse" />}
         </div>
       </div>
 
