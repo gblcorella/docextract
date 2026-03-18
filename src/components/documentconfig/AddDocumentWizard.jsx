@@ -571,6 +571,28 @@ function StepReview({ data }) {
           )}
         </div>
 
+        {enabledCaps.length > 0 && (() => {
+          const cap = enabledCaps[0];
+          const s = data.setup?.[cap.key] || {};
+          const entries = Object.entries(s).filter(([, v]) => v && (typeof v !== "object" || (Array.isArray(v) && v.length > 0)));
+          if (entries.length === 0) return null;
+          return (
+            <div className="border-t border-slate-200 pt-4">
+              <p className="text-xs text-slate-400 uppercase tracking-wide font-semibold mb-3">Document Setup</p>
+              <div className="space-y-1.5">
+                {entries.map(([k, v]) => (
+                  <div key={k} className="flex items-start gap-2 text-sm">
+                    <span className="text-slate-400 capitalize w-32 flex-shrink-0">{k.replace(/([A-Z])/g, " $1")}</span>
+                    <span className="text-slate-700 font-medium">
+                      {Array.isArray(v) ? v.join(", ") : String(v)}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })()}
+
       </div>
       <div className="bg-indigo-50 border border-indigo-100 rounded-lg p-3 flex gap-2">
         <Sparkles className="w-4 h-4 text-indigo-500 flex-shrink-0 mt-0.5" />
