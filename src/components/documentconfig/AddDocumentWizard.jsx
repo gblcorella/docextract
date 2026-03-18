@@ -390,46 +390,7 @@ function StepReview({ data }) {
             </div>
           )}
         </div>
-        <div className="border-t border-slate-200 pt-4">
-          <p className="text-xs text-slate-400 uppercase tracking-wide font-semibold mb-3">Pre-Processing</p>
-          {[
-            { key: "autoOrientation", label: "Auto Orientation Detection & Correction" },
-            { key: "dpiCorrection", label: "DPI Quality Correction" },
-            { key: "rotationCorrection", label: "Rotation Correction" },
-          ].map(({ key, label }) => (
-            <div key={key} className="flex items-center gap-2 mb-1.5">
-              <div className={cn("w-4 h-4 rounded-full flex items-center justify-center", data.preProcessing?.[key] ? "bg-indigo-600" : "bg-slate-200")}>
-                {data.preProcessing?.[key] && <Check className="w-2.5 h-2.5 text-white" />}
-              </div>
-              <span className={cn("text-sm", data.preProcessing?.[key] ? "text-slate-800" : "text-slate-400")}>{label}</span>
-            </div>
-          ))}
-        </div>
-        <div className="border-t border-slate-200 pt-4">
-          <p className="text-xs text-slate-400 uppercase tracking-wide font-semibold mb-3">Post-Processing</p>
-          <div className="space-y-2">
-            <div>
-              <p className="text-xs text-slate-500 mb-1">Output Format</p>
-              <p className="text-sm font-semibold text-slate-800 capitalize">{data.postProcessing?.outputFormat || "—"}</p>
-            </div>
-            <div>
-              <p className="text-xs text-slate-500 mb-1">Storage</p>
-              <p className="text-sm font-semibold text-slate-800 capitalize">{data.postProcessing?.storage || "—"}</p>
-            </div>
-            <div>
-              <p className="text-xs text-slate-500 mb-1">Notifications</p>
-              {data.postProcessing?.notifications && data.postProcessing.notifications.length > 0 ? (
-                <div className="flex flex-wrap gap-1">
-                  {data.postProcessing.notifications.map((n) => (
-                    <span key={n} className="inline-flex text-xs bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full">{n}</span>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-sm text-slate-400">None</p>
-              )}
-            </div>
-          </div>
-        </div>
+
       </div>
       <div className="bg-indigo-50 border border-indigo-100 rounded-lg p-3 flex gap-2">
         <Sparkles className="w-4 h-4 text-indigo-500 flex-shrink-0 mt-0.5" />
