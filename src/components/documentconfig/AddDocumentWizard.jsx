@@ -449,13 +449,9 @@ export default function AddDocumentWizard({ initialData, onCancel, onSave }) {
       if (initialData.configs[key]?.enabled) acc[key] = true;
       return acc;
     }, {}),
-    preProcessing: initialData.preProcessing || {},
-    postProcessing: initialData.postProcessing || {},
   } : {
     name: "",
     capabilities: {},
-    preProcessing: {},
-    postProcessing: {},
   });
 
   const update = (patch) => setData((d) => ({ ...d, ...patch }));
@@ -483,16 +479,12 @@ export default function AddDocumentWizard({ initialData, onCancel, onSave }) {
       name: data.name,
       fileName: `${data.name.replace(/\s+/g, "_")}.pdf`,
       configs,
-      preProcessing: data.preProcessing,
-      postProcessing: data.postProcessing,
     });
   };
 
   const stepContent = [
     <StepIdentity key="identity" data={data} onChange={update} />,
     <StepCapabilities key="capabilities" capabilities={data.capabilities} onSelect={selectCapability} />,
-    <StepPreProcessing key="preprocessing" settings={data.preProcessing} onChange={(preProcessing) => update({ preProcessing })} />,
-    <StepPostProcessing key="postprocessing" settings={data.postProcessing} onChange={(postProcessing) => update({ postProcessing })} />,
     <StepReview key="review" data={data} />,
   ];
 
