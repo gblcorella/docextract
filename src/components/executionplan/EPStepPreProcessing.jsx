@@ -25,10 +25,12 @@ export default function EPStepPreProcessing({ data, onChange }) {
 
       {/* Toggles */}
       <div className="space-y-3">
-        {OPTIONS.map(({ key, label, description, icon: Icon, color }) => {
+        {OPTIONS.map((option) => {
+          const { key, label, description, color } = option;
+          const Icon = option.icon;
           const active = !!data?.[key];
           return (
-            <div key={key} className="space-y-1">
+            <div key={key}>
               <button
                 type="button"
                 onClick={() => update(key, !active)}
@@ -82,7 +84,7 @@ export default function EPStepPreProcessing({ data, onChange }) {
             </button>
           ))}
         </div>
-        {(data?.pageRange === "custom") && (
+        {data?.pageRange === "custom" && (
           <input
             type="text"
             placeholder="e.g. 1-5, 8, 10-15"
