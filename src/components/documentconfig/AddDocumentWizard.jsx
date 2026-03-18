@@ -359,6 +359,185 @@ function StepPostProcessing({ settings, onChange }) {
   );
 }
 
+// ── Step 3: Document Setup (per capability) ───────────────────────────────────
+const ENGINES = ["Gen AI - LLM", "Rule Based", "Template Based"];
+const MODELS = ["GPT-4 Turbo", "GPT-4o", "Claude 3.5 Sonnet", "Gemini 1.5 Pro"];
+const MODES = ["Accurate", "Fast", "Balanced"];
+const REDACTION_PATTERNS = ["SSN", "Account Numbers", "Tax IDs", "Personal Names", "Email Addresses", "Phone Numbers"];
+
+function SelectRow({ label, value, onChange, options }) {
+  return (
+    <div className="space-y-1.5">
+      <label className="text-xs font-medium text-slate-600">{label}</label>
+      <select
+        value={value || ""}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full h-9 rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none focus:ring-2 focus:ring-indigo-200"
+      >
+        <option value="">Select…</option>
+        {options.map((o) => <option key={o} value={o}>{o}</option>)}
+      </select>
+    </div>
+  );
+}
+
+function ExtractionSetup({ settings, onChange }) {
+  const s = settings || {};
+  return (
+    <div className="space-y-5">
+      <p className="text-sm text-slate-500">Configure extraction engine and model settings.</p>
+      <div className="grid grid-cols-2 gap-4">
+        <SelectRow label="Engine" value={s.engine} onChange={(v) => onChange({ ...s, engine: v })} options={ENGINES} />
+        <SelectRow label="Model" value={s.model} onChange={(v) => onChange({ ...s, model: v })} options={MODELS} />
+        <SelectRow label="Mode" value={s.mode} onChange={(v) => onChange({ ...s, mode: v })} options={MODES} />
+        <div className="space-y-1.5">
+          <label className="text-xs font-medium text-slate-600">Temperature</label>
+          <div className="flex items-center gap-3">
+            <input
+              type="range" min="0" max="1" step="0.1"
+              value={s.temperature ?? 0.2}
+              onChange={(e) => onChange({ ...s, temperature: parseFloat(e.target.value) })}
+              className="flex-1 accent-indigo-600"
+            />
+            <span className="text-xs font-mono text-slate-600 w-8">{s.temperature ?? 0.2}</span>
+          </div>
+        </div>
+      </div>
+      <div className="space-y-1.5">
+        <label className="text-xs font-medium text-slate-600">Task Description / Prompt</label>
+        <textarea
+          rows={4}
+          placeholder="Describe what to extract, e.g. Extract fund name, NAV, distributions and capital called from the schedule of investments."
+          value={s.prompt || ""}
+          onChange={(e) => onChange({ ...s, prompt: e.target.value })}
+          className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm text-slate-700 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-indigo-200 resize-none"
+        />
+      </div>
+    </div>
+  );
+}
+
+function ParseSetup({ settings, onChange }) {
+  const s = settings || {};
+  const OUTPUT_FORMATS = ["Markdown", "HTML", "Plain Text", "JSON"];
+  return (
+    <div className="space-y-5">
+      <p className="text-sm text-slate-500">Configure how the document will be parsed into structured text.</p>
+      <div className="grid grid-cols-2 gap-4">
+        <SelectRow label="Engine" value={s.engine} onChange={(v) => onChange({ ...s, engine: v })} options={ENGINES} />
+        <SelectRow label="Output Format" value={s.outputFormat} onChange={(v) => onChange({ ...s, outputFormat: v })} options={OUTPUT_FORMATS} />
+      </div>
+    </div>
+  );
+}
+
+function SplitSetup({ settings, onChange }) {
+  const s = settings || {};
+  const [newCat, setNewCat] = useState("");
+  const categories = s.categories || [];
+  const addCat = () => {
+    if (!newCat.trim()) return;
+    onChange({ ...s, categories: [...categories, newCat.trim()] });
+    setNewCat("");
+  };
+  return (
+    <div className="space-y-5">
+      <p className="text-sm text-slate-500">Configure how the document will be split into segments.</p>
+      <div className="grid grid-cols-2 gap-4">
+        <SelectRow label="Engine" value={s.engine} onChange={(v) => onChange({ ...s, engine: v })} options={ENGINES} />
+        <SelectRow label="Model" value={s.model} onChange={(v) => onChange({ ...s, model: v })} options={MODELS} />
+        <SelectRow label="Mode" value={s.mode} onChange={(v) => onChange({ ...s, mode: v })} options={MODES} />
+      </div>
+      <div className="space-y-2">
+        <label className="text-xs font-medium text-slate-600">Split Categories</label>
+        <div className="flex gap-2">
+          <Input
+            value={newCat}
+            onChange={(e) => setNewCat(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addCat())}
+            placeholder="Add category…"
+            className="h-8 text-xs"
+          />
+          <Button onClick={addCat} size="sm" variant="outline" className="h-8"><Plus className="w-3.5 h-3.5" /></Button>
+        </div>
+        <div className="flex flex-wrap gap-1.5">
+          {categories.map((c) => (
+            <span key={c} className="inline-flex items-center gap-1 text-xs bg-purple-50 text-purple-700 border border-purple-100 px-2 py-0.5 rounded-full">
+              {c}
+              <button type="button" onClick={() => onChange({ ...s, categories: categories.filter((x) => x !== c) })}><X className="w-3 h-3" /></button>
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function RedactionSetup({ settings, onChange }) {
+  const s = settings || {};
+  const patterns = s.patterns || [];
+  const METHODS = ["Black Box", "White Out", "Label Replace"];
+  return (
+    <div className="space-y-5">
+      <p className="text-sm text-slate-500">Configure what data to redact and how.</p>
+      <SelectRow label="Redaction Method" value={s.method} onChange={(v) => onChange({ ...s, method: v })} options={METHODS} />
+      <div className="space-y-2">
+        <label className="text-xs font-medium text-slate-600">Redaction Patterns</label>
+        <div className="flex flex-wrap gap-1.5">
+          {REDACTION_PATTERNS.map((p) => {
+            const active = patterns.includes(p);
+            return (
+              <button
+                key={p}
+                type="button"
+                onClick={() => onChange({ ...s, patterns: active ? patterns.filter((x) => x !== p) : [...patterns, p] })}
+                className={cn("text-xs px-2.5 py-1 rounded-full border transition-all", active ? "bg-rose-50 text-rose-700 border-rose-200" : "bg-white text-slate-500 border-slate-200 hover:border-slate-300")}
+              >
+                {active && <Check className="w-3 h-3 inline mr-1" />}{p}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function StepDocumentSetup({ capabilities, setupData, onChange }) {
+  const selectedCap = Object.keys(capabilities).find((k) => capabilities[k]);
+  const cap = CAPABILITIES.find((c) => c.key === selectedCap);
+
+  if (!selectedCap || !cap) {
+    return (
+      <div className="text-center py-10 text-slate-400">
+        <p className="text-sm">No capability selected. Go back and choose one.</p>
+      </div>
+    );
+  }
+
+  const Icon = cap.icon;
+  const s = setupData?.[selectedCap] || {};
+  const update = (val) => onChange({ ...setupData, [selectedCap]: val });
+
+  return (
+    <div className="space-y-5 max-w-2xl">
+      <div className="flex items-center gap-3">
+        <div className={cn("w-9 h-9 rounded-lg flex items-center justify-center", cap.bg)}>
+          <Icon className={cn("w-4 h-4", cap.color)} />
+        </div>
+        <div>
+          <h3 className="text-base font-semibold text-slate-800">{cap.label} Setup</h3>
+          <p className="text-xs text-slate-400">{cap.desc}</p>
+        </div>
+      </div>
+      {selectedCap === "extraction" && <ExtractionSetup settings={s} onChange={update} />}
+      {selectedCap === "parse"      && <ParseSetup settings={s} onChange={update} />}
+      {selectedCap === "split"      && <SplitSetup settings={s} onChange={update} />}
+      {selectedCap === "redaction"  && <RedactionSetup settings={s} onChange={update} />}
+    </div>
+  );
+}
+
 // ── Step 4: Review ────────────────────────────────────────────────────────────
 function StepReview({ data }) {
   const enabledCaps = CAPABILITIES.filter((c) => data.capabilities[c.key]);
