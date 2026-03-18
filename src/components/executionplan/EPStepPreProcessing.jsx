@@ -1,12 +1,14 @@
 import React from "react";
 import { cn } from "@/lib/utils";
-import { ScanText, RotateCw, Wand2, Crop } from "lucide-react";
+import { ScanText, RotateCw, Wand2, KeyRound } from "lucide-react";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 const OPTIONS = [
   { key: "ocr", label: "OCR Enhancement", description: "Apply optical character recognition to improve text extraction accuracy.", icon: ScanText, color: "text-indigo-600 bg-indigo-50 border-indigo-200" },
   { key: "rotation", label: "Auto Rotation", description: "Automatically detect and correct page rotation.", icon: RotateCw, color: "text-purple-600 bg-purple-50 border-purple-200" },
   { key: "denoise", label: "Denoise & Cleanup", description: "Remove noise, artifacts, and background from scanned documents.", icon: Wand2, color: "text-emerald-600 bg-emerald-50 border-emerald-200" },
+  { key: "checkPassword", label: "Check Password", description: "Detect and handle password-protected documents before processing.", icon: KeyRound, color: "text-amber-600 bg-amber-50 border-amber-200" },
 ];
 
 const PAGE_RANGES = ["all", "first-10", "custom"];
