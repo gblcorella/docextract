@@ -145,6 +145,38 @@ export default function EPStepPostProcessing({ data, onChange }) {
           ))}
         </div>
       </div>
+
+      {/* Response Decoration */}
+      <div>
+        <SectionHeader title="Response Decoration" subtitle="Apply transformations and validations to extracted values." />
+        <div className="space-y-2">
+          {DECORATION_OPTIONS.map(({ key, label, description, icon: Icon }) => {
+            const active = !!d[key];
+            return (
+              <button
+                key={key}
+                type="button"
+                onClick={() => toggleOption(key)}
+                className={cn(
+                  "w-full text-left flex items-start gap-4 px-4 py-3.5 rounded-xl border-2 transition-all",
+                  active ? "border-indigo-300 bg-indigo-50" : "border-slate-200 bg-white hover:border-slate-300"
+                )}
+              >
+                <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5", active ? "bg-indigo-100" : "bg-slate-100")}>
+                  <Icon className={cn("w-4 h-4", active ? "text-indigo-500" : "text-slate-400")} />
+                </div>
+                <div className="flex-1">
+                  <p className={cn("text-sm font-medium", active ? "text-indigo-700" : "text-slate-700")}>{label}</p>
+                  <p className="text-xs text-slate-400 mt-0.5">{description}</p>
+                </div>
+                <div className={cn("relative rounded-full transition-colors flex-shrink-0 mt-1", active ? "bg-indigo-500" : "bg-slate-200")} style={{ height: "18px", width: "32px" }}>
+                  <span className={cn("absolute top-0.5 left-0.5 w-3.5 h-3.5 rounded-full bg-white shadow transition-transform", active && "translate-x-3.5")} />
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
