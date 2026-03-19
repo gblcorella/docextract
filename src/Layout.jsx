@@ -9,8 +9,7 @@ const navItems = [
   { label: "Transactions", page: "Transactions", icon: ArrowLeftRight },
   { label: "Document Config", page: "DocumentConfig", icon: FolderOpen },
   { label: "Analytics", page: "Analytics", icon: BarChart2 },
-  { label: "Playground", page: "Playground", icon: FlaskConical },
-  { label: "Playground V2", page: "PlaygroundV2", icon: Beaker },
+
   { label: "Client Profile", page: "Onboarding", icon: UserPlus },
   { label: "Execution Plan", page: "ExecutionPlan", icon: Play },
   { label: "Support", page: "Support", icon: LifeBuoy },
